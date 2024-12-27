@@ -915,7 +915,7 @@ function Luminosity.new(Name, Header, Icon)
                         Name = "Header",
                         BackgroundTransparency = 1,
                         Position = UDim2.new(0, 0, 0, 32),
-                        Size = UDim2.new(0, 125, 0, 0),
+                        Size = UDim2.new(0, 125, 0, 15),
                         Font = Enum.Font.Gotham,
                         Text = Header and tostring(Header) or "v1.0.0",
                         TextColor3 = Color3.fromRGB(255, 255, 255),
