@@ -1,5 +1,5 @@
-  {
-		{":grinning:"},
+	{
+	{":grinning:"},
 		"😀"
 	}, {
 		{":grimacing:"},
