@@ -8,7 +8,7 @@ function DungeonLoadScript()
         game.Loaded:Wait()
         print("Loaded Game")
     end
-	task.wait(10)
+
     local repo = 'https://raw.githubusercontent.com/KINGHUB01/Gui/main/'
 
     local library = loadstring(game:HttpGet(repo .. 'Gui%20Lib%20%5BLibrary%5D'))()
@@ -294,6 +294,16 @@ function DungeonLoadScript()
     save_manager:SetFolder('Astolfo Ware/Dungeon Heroes')
     save_manager:BuildConfigSection(tabs['ui settings'])
     theme_manager:ApplyToTab(tabs['ui settings'])
+    local configsss = 0;
+    task.spawn(function()
+        while configsss== 0 do
+            if local_player.Character:FindFirstChild("HumanoidRootPart") then
+                configsss = 1
+            else
+                task.wait()
+            end
+        end
+    end)
     save_manager:LoadAutoloadConfig()
 end
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
