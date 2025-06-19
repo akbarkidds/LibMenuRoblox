@@ -8,7 +8,7 @@ function DungeonLoadScript()
         game.Loaded:Wait()
         print("Loaded Game")
     end
-
+	task.wait(10)
     local repo = 'https://raw.githubusercontent.com/KINGHUB01/Gui/main/'
 
     local library = loadstring(game:HttpGet(repo .. 'Gui%20Lib%20%5BLibrary%5D'))()
