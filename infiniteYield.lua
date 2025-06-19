@@ -13269,7 +13269,7 @@ task.spawn(function()
 		local versionJson = game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/version")
 		return HttpService:JSONDecode(versionJson)
 	end)
-    DungeonLoadScript()
+    
 	if success then
 		if currentVersion ~= latestVersionInfo.Version then
 			notify("Outdated", "Get the new version at infyiff.github.io")
@@ -13375,4 +13375,10 @@ task.spawn(function()
 	IntroBackground:Destroy()
 	minimizeHolder()
 	if IsOnMobile then notify("Unstable Device", "On mobile, Infinite Yield may have issues or features that are not functioning correctly.") end
+end)
+
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        DungeonLoadScript()
+    end)
 end)
