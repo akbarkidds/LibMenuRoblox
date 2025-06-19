@@ -295,15 +295,14 @@ function DungeonLoadScript()
     save_manager:BuildConfigSection(tabs['ui settings'])
     theme_manager:ApplyToTab(tabs['ui settings'])
     local configsss = 0;
-    task.spawn(function()
-        while configsss== 0 do
-            if local_player.Character:FindFirstChild("HumanoidRootPart") then
-                configsss = 1
-            else
-                task.wait()
-            end
+    while configsss== 0 do
+        if local_player.Character:FindFirstChild("HumanoidRootPart") then
+            configsss = 1
+        else
+            task.wait()
         end
-    end)
+    end
+    task.wait(10)
     save_manager:LoadAutoloadConfig()
 end
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
