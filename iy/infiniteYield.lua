@@ -1,4 +1,5 @@
 if IY_LOADED and not _G.IY_DEBUG == true then
+    -- error("Infinite Yield is already running!", 0)
     return
 end
 
@@ -6425,7 +6426,7 @@ local TeleportCheck = false
 Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if KeepInfYield and (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/infiniteYield.lua'))()")
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
 	end
 end)
 
@@ -13090,15 +13091,18 @@ local mapName = {
     ["Grass Village"] = "NarutoWorld",
     ["Brum Island"] = "OPWorld",
     ["Faceheal Town"] = "BleachWorld",
+    ["Faceheal Island"] = "BleachWorld",
     ["Lucky Kingdom"] = "BCWorld",
     ["Nipon City"] = "ChainsawWorld",
     ["Mori Town"] = "JojoWorld",
+    ["Mori Island"] = "JojoWorld",
     ["Dragon City"] = "DBWorld",
     ["XZ City"] = "OPMWorld",
     ["Kindama City"] = "DanWorld",
     ["Hunters City"] = "Solo2World",
     ["Nen City"] = "HxHWorld",
     ["Hurricane Town"] = "SlimeWorld",
+    ["Hurricane Island"] = "SlimeWorld",
 }
 
 if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 then 
@@ -14232,25 +14236,6 @@ end
             vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
             task.wait(1)
             vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-        end)
-        coroutine.resume(coroutine.create(function()
-            while task.wait() do
-                pcall(function() 
-                    ViSendMouseButtonEvent:SendMouseButtonEvent(795, 595, 0, true, game, 1)
-                    task.wait(1)
-                    ViSendMouseButtonEvent:SendMouseButtonEvent(795, 595, 0, false, game, 1)
-                    task.wait(1000)
-                end)
-            end
-        end))
-        game:GetService("Players").LocalPlayer.Idled:connect(function()
-            local Vector = Vector2.new(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2  - (game:GetService("GuiService"):GetGuiInset().Y/2))
-            vu:Button1Down(Vector2.new(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2  - (game:GetService("GuiService"):GetGuiInset().Y/2)))
-        end)
-        game.Players.LocalPlayer.AttributeChanged:Connect(function(n)
-            if n == "Idle" then
-                game.Players.LocalPlayer:SetAttribute("Idle", false)
-            end
         end)
     -- ====== AnitiAFK ======
     Fluent:Notify({
