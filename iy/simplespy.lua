@@ -758,45 +758,47 @@ end
                         VariableIndex.TweenToMonster = Value
                         if VariableIndex.TweenToMonster then
                             while VariableIndex.TweenToMonster and task.wait() do
-                                local playerPosition = humanoidRootPart.Position
-                                if game.PlaceId == 128336380114944 and playerposisi == playerPosition then
-                                    local hudRoom = game:GetService("Players").LocalPlayer.PlayerGui.Hud.UpContanier
-                                    if hudRoom:FindFirstChild("Room") then
-                                        local infoRoom = hudRoom.Room.Text:split("/") or {}
-                                        if #infoRoom > 1 then
-                                            local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
-                                            if infoRoomValue ~= nil then
-                                                if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
-                                                    task.wait(2)
-                                                    if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
-                                                        local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
-                                                        if NameRoom:FindFirstChild("Entrace") then
-                                                            local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
-                                                            playerinposition = playerinposition + 1
-                                                            if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
-                                                                RoomDungeons = NameRoom.Name
-                                                                player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                Tween(RoomDungeon, 500)
-                                                                playerinposition = 0
+                                if VariableIndex.TweenToMonster then
+                                    local playerPosition = humanoidRootPart.Position
+                                    if game.PlaceId == 128336380114944 and playerposisi == playerPosition then
+                                        local hudRoom = game:GetService("Players").LocalPlayer.PlayerGui.Hud.UpContanier
+                                        if hudRoom:FindFirstChild("Room") then
+                                            local infoRoom = hudRoom.Room.Text:split("/") or {}
+                                            if #infoRoom > 1 then
+                                                local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
+                                                if infoRoomValue ~= nil then
+                                                    if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
+                                                        task.wait(1)
+                                                        if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                            local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
+                                                            if NameRoom:FindFirstChild("Entrace") then
+                                                                local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
+                                                                playerinposition = playerinposition + 1
+                                                                if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
+                                                                    RoomDungeons = NameRoom.Name
+                                                                    player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                    Tween(RoomDungeon, 500)
+                                                                    playerinposition = 0
+                                                                end
                                                             end
                                                         end
                                                     end
-                                                end
-                                                if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
-                                                    task.wait(2)
-                                                    if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
-                                                        local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
-                                                        if NameRoom2:FindFirstChild("FirePortal") then
-                                                            local RoomDungeon = NameRoom2.FirePortal
-                                                            playerinposition = playerinposition + 1
-                                                            if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
-                                                                RoomDungeons = NameRoom2.Name
-                                                                player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                Tween(RoomDungeon, 500)
-                                                                task.wait(2)
-                                                                fireproximityprompt(RoomDungeon.ProximityPrompt)
-                                                                task.wait(1)
-                                                                playerinposition = 0
+                                                    if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
+                                                        task.wait(1)
+                                                        if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                            local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
+                                                            if NameRoom2:FindFirstChild("FirePortal") then
+                                                                local RoomDungeon = NameRoom2.FirePortal
+                                                                playerinposition = playerinposition + 1
+                                                                if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
+                                                                    RoomDungeons = NameRoom2.Name
+                                                                    player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                    Tween(RoomDungeon, 500)
+                                                                    task.wait(2)
+                                                                    fireproximityprompt(RoomDungeon.ProximityPrompt)
+                                                                    task.wait(1)
+                                                                    playerinposition = 0
+                                                                end
                                                             end
                                                         end
                                                     end
@@ -804,44 +806,43 @@ end
                                             end
                                         end
                                     end
-                                end
-                                local closestEnemy = nil
-                                local closestDistance = math.huge
-                                playerposisi = playerPosition
-                                for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
-                                    if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") and isValidEnemy(enemy) then
-                                        local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
-                                        if distance < closestDistance then
-                                            closestDistance = distance
-                                            closestEnemy = enemy
-                                        end
-                                    end
-                                end
-                                
-                                if closestEnemy then
-                                    player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
-                                    closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
-                                    task.wait()
-                                    local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
-
-                                    while closestEnemy:FindFirstChild("HealthBar") do
-                                        if isAttacking == false then
-                                            Tween(closestEnemy.HumanoidRootPart, 500)
-                                        end
-                                        local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
-                                        local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
-                                        
-                                        if amount and amount:IsA("TextLabel") then
-                                            local health = tonumber(string.match(amount.Text, "(%d+)"))
-                                            if not health or health <= 0 then 
-                                                isAttacking = false
-                                                break
+                                    local closestEnemy = nil
+                                    local closestDistance = math.huge
+                                    playerposisi = playerPosition
+                                    for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
+                                        if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") and isValidEnemy(enemy) then
+                                            local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
+                                            if distance < closestDistance then
+                                                closestDistance = distance
+                                                closestEnemy = enemy
                                             end
                                         end
+                                    end
+                                    
+                                    if closestEnemy then
+                                        player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
+                                        closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
                                         task.wait()
+                                        local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
+
+                                        while closestEnemy:FindFirstChild("HealthBar") do
+                                            if isAttacking == false then
+                                                Tween(closestEnemy.HumanoidRootPart, 500)
+                                            end
+                                            local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
+                                            local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
+                                            
+                                            if amount and amount:IsA("TextLabel") then
+                                                local health = tonumber(string.match(amount.Text, "(%d+)"))
+                                                if not health or health <= 0 then 
+                                                    isAttacking = false
+                                                    break
+                                                end
+                                            end
+                                            task.wait()
+                                        end
                                     end
                                 end
-                                
                             end
                         end
                     end)
@@ -989,6 +990,28 @@ end
                             
                             if DungeonSelect == nil or #DungeonSelect == 0 then
                                 notif("Select Dungeon Rank First", 2)
+                            end
+                        end
+                    end)
+
+                    local toggleAutoJoinInfernalTower = Tabs.Dungeon:AddToggle("AutoJoinInfernalTower", { Title = "Auto Join Infernal Tower", Default = false })
+                    toggleAutoJoinInfernalTower:OnChanged(function()
+                        if toggleAutoJoinInfernalTower.Value then
+                            while toggleAutoJoinInfernalTower.Value and task.wait() do
+                                if game.PlaceId ~= 128336380114944 then
+                                    local args = {
+                                        {
+                                            {
+                                                Check = false,
+                                                Event = "CastleAction",
+                                                Action = "Join"
+                                            },
+                                            "\f"
+                                        }
+                                    }
+                                    game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                    task.wait(5)
+                                end
                             end
                         end
                     end)
