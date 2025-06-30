@@ -162,6 +162,39 @@ end
             }
             
             -- ==================================== Start Function Group ============================
+                    local function fireproximityprompt(ProximityPrompt, Amount, Skip)
+                        assert(ProximityPrompt, "Argument #1 Missing or nil")
+                        assert(typeof(ProximityPrompt) == "Instance" and ProximityPrompt:IsA("ProximityPrompt"), "Attempted to fire a Value that is not a ProximityPrompt")
+                    
+                        local HoldDuration = ProximityPrompt.HoldDuration
+                        if Skip then
+                            ProximityPrompt.HoldDuration = 0
+                        end
+                    
+                        for i = 1, Amount or 1 do
+                            ProximityPrompt:InputHoldBegin()
+                            if Skip then
+                                local RunService = game:GetService("RunService")
+                                local Start = time()
+                                repeat
+                                    RunService.Heartbeat:Wait(0.1)
+                                until time() - Start > HoldDuration
+                            end
+                            ProximityPrompt:InputHoldEnd()
+                        end
+                        ProximityPrompt.HoldDuration = HoldDuration
+                    end
+
+                    local function firetouchinterest(totouch, whattotouchwith,nilvalue)
+                        pcall(function()
+                            local clone = totouch:Clone()
+                            local orgpos = totouch.CFrame
+                            totouch.CFrame = whattotouchwith.CFrame
+                            wait(0.5)
+                            totouch.CFrame = orgpos
+                            clone:Destroy()
+                        end)
+                    end
                 -- ===================================== Function =====================================
 
                     local function notif(message, duration)
@@ -247,7 +280,7 @@ end
                     local function Tween(P1, Speed)
                         local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                         TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = CFrame.new(P1.Position) * CFrame.new(5, 0, 0)}):Play()
-                        if _G.StopTween then
+                        if Distance < 5 then
                             TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = CFrame.new(P1.Position) * CFrame.new(5, 0, 0)}):Cancel()
                         end
                     end
@@ -720,7 +753,6 @@ end
                     local playerposisi
                     local playerinposition = 0
                     local RoomDungeons = ""
-                    local RoomDungeons2 = 0
                     local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
@@ -734,17 +766,36 @@ end
                                         if #infoRoom > 1 then
                                             local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                             if infoRoomValue ~= nil then
-                                                if infoRoomValue > 1 then
-                                                    if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and infoRoomValue ~= 500 then
+                                                if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
+                                                    task.wait(2)
+                                                    if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                         local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                         if NameRoom:FindFirstChild("Entrace") then
                                                             local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                             playerinposition = playerinposition + 1
                                                             if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
-                                                                RoomDungeons2 = tonumber(infoRoom[2]:match("[%d%.]+")) or 0
                                                                 RoomDungeons = NameRoom.Name
                                                                 player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                 Tween(RoomDungeon, 500)
+                                                                playerinposition = 0
+                                                            end
+                                                        end
+                                                    end
+                                                end
+                                                if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
+                                                    task.wait(2)
+                                                    if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                        local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
+                                                        if NameRoom2:FindFirstChild("FirePortal") then
+                                                            local RoomDungeon = NameRoom2.FirePortal
+                                                            playerinposition = playerinposition + 1
+                                                            if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
+                                                                RoomDungeons = NameRoom2.Name
+                                                                player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                Tween(RoomDungeon, 500)
+                                                                task.wait(2)
+                                                                fireproximityprompt(RoomDungeon.ProximityPrompt)
+                                                                task.wait(1)
                                                                 playerinposition = 0
                                                             end
                                                         end
