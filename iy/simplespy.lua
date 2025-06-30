@@ -777,7 +777,7 @@ end
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
-                                                                        RoomDungeons2 = infoRoomValue
+                                                                        RoomDungeons2 = NameRoom.Name
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -795,7 +795,7 @@ end
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
-                                                                        RoomDungeons2 = infoRoomValue
+                                                                        RoomDungeons2 = NameRoom2.Name
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -840,7 +840,7 @@ end
                                             
                                             if amount and amount:IsA("TextLabel") then
                                                 local health = tonumber(string.match(amount.Text, "(%d+)"))
-                                                if not health or health <= 0 then 
+                                                if not health or health <= 0 then
                                                     isAttacking = false
                                                     break
                                                 end
@@ -951,7 +951,7 @@ end
                                                 }
                                             }
                                             game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                                        elseif RoomDungeons == "Room_"..RoomDungeons2 then
+                                        elseif RoomDungeons == RoomDungeons2 then
                                             stayPlayerInDungeon = stayPlayerInDungeon + 1
                                             task.wait(1)
                                         end
