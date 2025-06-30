@@ -770,12 +770,12 @@ end
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
-                                                            task.wait(1)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
+                                                                    print(RoomDungeons.." | "..NameRoom.Name)
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 3 then
                                                                         RoomDungeons2 = NameRoom.Name
                                                                         RoomDungeons = NameRoom.Name
@@ -788,7 +788,7 @@ end
                                                         end
                                                     elseif infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
-                                                            task.wait(1)
+                                                            task.wait(2)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
