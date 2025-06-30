@@ -736,15 +736,17 @@ end
                                             if infoRoomValue ~= nil then
                                                 if infoRoomValue > 1 then
                                                     if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and infoRoomValue ~= 500 then
-                                                        local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
-                                                        local ParentRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
-                                                        playerinposition = playerinposition + 1
-                                                        if RoomDungeons ~= ParentRoom.Name and playerinposition > 10 then
-                                                            RoomDungeons2 = tonumber(infoRoom[2]:match("[%d%.]+")) or 0
-                                                            RoomDungeons = ParentRoom.Name
-                                                            player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                            Tween(RoomDungeon, 500)
-                                                            playerinposition = 0
+                                                        local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
+                                                        if NameRoom:FindFirstChild("Entrace") then
+                                                            local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
+                                                            playerinposition = playerinposition + 1
+                                                            if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
+                                                                RoomDungeons2 = tonumber(infoRoom[2]:match("[%d%.]+")) or 0
+                                                                RoomDungeons = NameRoom.Name
+                                                                player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                Tween(RoomDungeon, 500)
+                                                                playerinposition = 0
+                                                            end
                                                         end
                                                     end
                                                 end
@@ -755,7 +757,6 @@ end
                                 local closestEnemy = nil
                                 local closestDistance = math.huge
                                 playerposisi = playerPosition
-                                -- Find the closest valid enemy (any enemy with health > 0)
                                 for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                     if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") and isValidEnemy(enemy) then
                                         local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
@@ -767,7 +768,6 @@ end
                                 end
                                 
                                 if closestEnemy then
-                                    -- Teleport to the enemy
                                     player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
                                     closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
                                     task.wait()
