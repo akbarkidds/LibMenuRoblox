@@ -280,7 +280,7 @@ end
                     local function Tween(P1, Speed)
                         local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                         TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = CFrame.new(P1.Position) * CFrame.new(5, 0, 0)}):Play()
-                        if Distance < 5 then
+                        if Distance <= 5 then
                             TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = CFrame.new(P1.Position) * CFrame.new(5, 0, 0)}):Cancel()
                         end
                     end
@@ -753,6 +753,7 @@ end
                     local playerposisi
                     local playerinposition = 0
                     local RoomDungeons = ""
+                    local RoomDungeons2 = 0
                     local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
@@ -776,6 +777,7 @@ end
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
+                                                                        RoomDungeons2 = NameRoom.Name
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -793,6 +795,7 @@ end
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
+                                                                        RoomDungeons2 = NameRoom2.Name
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
