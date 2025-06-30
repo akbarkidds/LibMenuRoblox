@@ -769,7 +769,7 @@ end
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
-                                                        if all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
+                                                        if all_trim(infoRoom[1]) == "Room: "..infoRoomValue then
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
@@ -787,7 +787,7 @@ end
                                                             end
                                                         end
                                                     elseif infoRoomValue > 1 then
-                                                        if all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
+                                                        if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue then
                                                             task.wait(2)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
