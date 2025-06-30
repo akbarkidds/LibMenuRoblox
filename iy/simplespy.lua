@@ -782,8 +782,7 @@ end
                                                                 end
                                                             end
                                                         end
-                                                    end
-                                                    if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
+                                                    elseif infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
                                                         task.wait(1)
                                                         if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                             local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
