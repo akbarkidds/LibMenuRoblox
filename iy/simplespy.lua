@@ -776,7 +776,7 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
+                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 3 then
                                                                         RoomDungeons2 = NameRoom.Name
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
@@ -794,7 +794,7 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
+                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 3 then
                                                                         RoomDungeons2 = NameRoom2.Name
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
