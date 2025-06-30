@@ -767,36 +767,40 @@ end
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 if infoRoomValue ~= nil then
-                                                    if infoRoomValue > 1 and all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
-                                                        task.wait(1)
-                                                        if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
-                                                            local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
-                                                            if NameRoom:FindFirstChild("Entrace") then
-                                                                local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
-                                                                playerinposition = playerinposition + 1
-                                                                if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
-                                                                    RoomDungeons = NameRoom.Name
-                                                                    player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                    Tween(RoomDungeon, 500)
-                                                                    playerinposition = 0
+                                                    if infoRoomValue > 1 then
+                                                        if all_trim(infoRoom[1]) == "Room_"..infoRoomValue then
+                                                            task.wait(1)
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                                local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
+                                                                if NameRoom:FindFirstChild("Entrace") then
+                                                                    local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
+                                                                    playerinposition = playerinposition + 1
+                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 10 then
+                                                                        RoomDungeons = NameRoom.Name
+                                                                        player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                        Tween(RoomDungeon, 500)
+                                                                        playerinposition = 0
+                                                                    end
                                                                 end
                                                             end
                                                         end
-                                                    elseif infoRoomValue > 1 and all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
-                                                        task.wait(1)
-                                                        if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
-                                                            local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
-                                                            if NameRoom2:FindFirstChild("FirePortal") then
-                                                                local RoomDungeon = NameRoom2.FirePortal
-                                                                playerinposition = playerinposition + 1
-                                                                if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
-                                                                    RoomDungeons = NameRoom2.Name
-                                                                    player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                    Tween(RoomDungeon, 500)
-                                                                    task.wait(2)
-                                                                    fireproximityprompt(RoomDungeon.ProximityPrompt)
-                                                                    task.wait(1)
-                                                                    playerinposition = 0
+                                                    elseif infoRoomValue > 1 then
+                                                        if all_trim(infoRoom[1]) == "Floor"..infoRoomValue then
+                                                            task.wait(1)
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                                local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
+                                                                if NameRoom2:FindFirstChild("FirePortal") then
+                                                                    local RoomDungeon = NameRoom2.FirePortal
+                                                                    playerinposition = playerinposition + 1
+                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 10 then
+                                                                        RoomDungeons = NameRoom2.Name
+                                                                        player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                        Tween(RoomDungeon, 500)
+                                                                        task.wait(2)
+                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt)
+                                                                        task.wait(1)
+                                                                        playerinposition = 0
+                                                                    end
                                                                 end
                                                             end
                                                         end
