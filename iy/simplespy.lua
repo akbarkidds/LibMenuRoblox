@@ -753,6 +753,7 @@ end
                                         local hudRoom = game:GetService("Players").LocalPlayer.PlayerGui.Hud.UpContanier
                                         if hudRoom:FindFirstChild("Room") then
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
+                                            print(#infoRoom)
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 print("Portal: "..infoRoomValue)
