@@ -152,6 +152,11 @@ end
             -- ======== Configuration Variables ========
             local isAttacking = false
             local enemytargetReal
+            local playerposisi
+            local playerinposition = 0
+            local RoomDungeons = ""
+            local RoomDungeons2 = 0
+            local stayPlayerInDungeon = 0
             local VariableIndex = {
                 AutoFarm = false,
                 TweenToMonster = false,
@@ -729,10 +734,6 @@ end
                         end
                     end)
 
-                    local playerposisi
-                    local playerinposition = 0
-                    local RoomDungeons = ""
-                    local RoomDungeons2 = 0
                     local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
@@ -756,7 +757,7 @@ end
                                                                     playerinposition = playerinposition + 1
                                                                     RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     RoomDungeons = NameRoom.Name
-                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 3 then
+                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 then
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         playerinposition = 0
@@ -766,7 +767,7 @@ end
                                                         end
                                                     elseif infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue then
-                                                            task.wait(2)
+                                                            task.wait(1)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
@@ -774,7 +775,7 @@ end
                                                                     playerinposition = playerinposition + 1
                                                                     RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     RoomDungeons = NameRoom2.Name
-                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 3 then
+                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 then
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         task.wait(2)
@@ -814,8 +815,12 @@ end
                                         local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
 
                                         while closestEnemy:FindFirstChild("HealthBar") do
-                                            if isAttacking == false or distancex >= 5 then
+                                            if isAttacking == false then
                                                 Tween(closestEnemy.HumanoidRootPart, 500)
+                                            end
+                                            if isAttacking then
+                                                playerinposition = 0
+                                                stayPlayerInDungeon = 0
                                             end
                                             local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
                                             local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
@@ -886,7 +891,7 @@ end
                             end
                         DungeonSelect = Values
                     end)
-                    local stayPlayerInDungeon = 0
+                    
                     local toggleAutoJoinDungeon = Tabs.Dungeon:AddToggle("AutoJoinDungeon", { Title = "Auto Join Dungeon / Rejoin / Leave", Default = false })
                     toggleAutoJoinDungeon:OnChanged(function()
                         VariableIndex.AutoJoinDungeon = toggleAutoJoinDungeon.Value
