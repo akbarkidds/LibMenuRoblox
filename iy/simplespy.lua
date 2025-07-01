@@ -162,29 +162,6 @@ end
             }
             
             -- ==================================== Start Function Group ============================
-                    local function fireproximityprompt(ProximityPrompt, Amount, Skip)
-                        assert(ProximityPrompt, "Argument #1 Missing or nil")
-                        assert(typeof(ProximityPrompt) == "Instance" and ProximityPrompt:IsA("ProximityPrompt"), "Attempted to fire a Value that is not a ProximityPrompt")
-                    
-                        local HoldDuration = ProximityPrompt.HoldDuration
-                        if Skip then
-                            ProximityPrompt.HoldDuration = 0
-                        end
-                    
-                        for i = 1, Amount or 1 do
-                            ProximityPrompt:InputHoldBegin()
-                            if Skip then
-                                local RunService = game:GetService("RunService")
-                                local Start = time()
-                                repeat
-                                    RunService.Heartbeat:Wait(0.1)
-                                until time() - Start > HoldDuration
-                            end
-                            ProximityPrompt:InputHoldEnd()
-                        end
-                        ProximityPrompt.HoldDuration = HoldDuration
-                    end
-
                     local function firetouchinterest(totouch, whattotouchwith,nilvalue)
                         pcall(function()
                             local clone = totouch:Clone()
@@ -378,6 +355,7 @@ end
                             end
                         end
                     end)
+
                     local Toggle_autoSetSpawn = Main:AddToggle("autoSetSpawn", {Title = "Auto Set Spawn Quest", Default = false})
                     Toggle_autoSetSpawn:OnChanged(function()
                         if Toggle_autoSetSpawn.Value then
@@ -405,6 +383,7 @@ end
                             end
                         end
                     end)
+
                     local Toggle_AutoArise = Main:AddToggle("autoarise", {Title = "Auto Arise", Default = false})
                     Toggle_AutoArise:OnChanged(function()
                         if Toggle_AutoArise.Value then
@@ -775,10 +754,9 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    print(RoomDungeons.." | "..NameRoom.Name)
+                                                                    RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                    RoomDungeons = NameRoom.Name
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 3 then
-                                                                        RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
-                                                                        RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         playerinposition = 0
@@ -794,13 +772,15 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
+                                                                    RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                    RoomDungeons = NameRoom2.Name
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 3 then
-                                                                        RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
-                                                                        RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         task.wait(2)
-                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt)
+                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt,0)
+                                                                        task.wait()
+                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt,1)
                                                                         task.wait(1)
                                                                         playerinposition = 0
                                                                     end
@@ -816,11 +796,13 @@ end
                                     local closestDistance = math.huge
                                     playerposisi = playerPosition
                                     for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
-                                        if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") and isValidEnemy(enemy) then
-                                            local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
-                                            if distance < closestDistance then
-                                                closestDistance = distance
-                                                closestEnemy = enemy
+                                        if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
+                                            if isValidEnemy(enemy) then
+                                                local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
+                                                if distance < closestDistance then
+                                                    closestDistance = distance
+                                                    closestEnemy = enemy
+                                                end
                                             end
                                         end
                                     end
@@ -941,7 +923,6 @@ end
                                         end
                                     else
                                         if stayPlayerInDungeon > 5 then
-                                            stayPlayerInDungeon = 0
                                             local args = {
                                                 {
                                                     {
@@ -951,6 +932,7 @@ end
                                                 }
                                             }
                                             game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                            stayPlayerInDungeon = 0
                                         elseif RoomDungeons == RoomDungeons2 then
                                             stayPlayerInDungeon = stayPlayerInDungeon + 1
                                             task.wait(1)
