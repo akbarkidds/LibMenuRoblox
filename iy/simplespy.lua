@@ -1,6 +1,7 @@
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
+
 local player = game.Players.LocalPlayer
 -- // // // Services // // // --
 local VirtualInputManager = game:GetService("VirtualInputManager")
@@ -749,13 +750,14 @@ end
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue then
-                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
                                                                     RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     RoomDungeons = NameRoom.Name
+                                                                    print(RoomDungeons .. " | " .. RoomDungeons2)
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 5 then
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -767,7 +769,7 @@ end
                                                     elseif infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue then
                                                             task.wait(1)
-                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) ~= 500 then
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
