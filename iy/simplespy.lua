@@ -964,7 +964,7 @@ end
                                         if DungeonInfo:FindFirstChild("UpContanier") then
                                             if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
                                                 if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
-                                                    if stayPlayerInDungeon > 5 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends") then
+                                                    if stayPlayerInDungeon > 5 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends", 1) ~= nil then
                                                         local args = {
                                                             {
                                                                 {
