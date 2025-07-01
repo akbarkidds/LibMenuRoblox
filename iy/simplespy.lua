@@ -804,22 +804,18 @@ end
                                                             end
                                                         end
                                                     end
-                                                    if infoRoomValue > 1 and not summerInf then
-                                                        print(all_trim(infoRoom[1]) .. "== Portal: "..infoRoomValue)
-                                                        if all_trim(infoRoom[1]) == "Portal: "..infoRoomValue then
-                                                            task.wait(1)
-                                                            summerInf = true
-                                                        end
+                                                    if infoRoomValue > 1 and not inMidSummerInf and infoRoomValue == 500 then
+                                                        print("Portal: "..infoRoomValue)
+                                                        local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
+                                                        Tween(newLoc, 500)
+                                                        summerInf = true
+                                                        inMidSummerInf = true
                                                     end
                                                 end
                                             end
                                         end
-                                    end
-                                    if summerInf == true and not inMidSummerInf then
-                                        local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
-                                        Tween(newLoc, 500)
-                                        inMidSummerInf = true
-                                    elseif noSummerInf then
+                                    end   
+                                    if noSummerInf then
                                         local closestEnemy = nil
                                         local closestDistance = math.huge
                                         playerposisi = playerPosition
