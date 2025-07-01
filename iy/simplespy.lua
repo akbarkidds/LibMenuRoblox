@@ -734,7 +734,7 @@ end
                         end
                     end)
 
-                    Tabs.Main:AddParagraph({
+                    AutoSection:AddParagraph({
                         Title = "Tween To Monster Information.",
                         Content = "Tween To Monster Include :.\n- Auto Change Portal in Infernal Towen.\n- Auto TP Mid To Summer Inf."
                     })
