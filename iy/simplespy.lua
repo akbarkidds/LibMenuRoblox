@@ -767,6 +767,7 @@ end
                                                             end
                                                         end
                                                     elseif infoRoomValue > 1 then
+                                                        print("Floor: "..infoRoomValue .. " | " all_trim(infoRoom[1]))
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue then
                                                             task.wait(1)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
