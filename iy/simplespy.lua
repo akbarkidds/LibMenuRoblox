@@ -755,9 +755,9 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
-                                                                    RoomDungeons = NameRoom.Name
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 5 then
+                                                                        RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                        RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         playerinposition = 0
@@ -773,9 +773,9 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
-                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
-                                                                    RoomDungeons = NameRoom2.Name
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 then
+                                                                        RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                        RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         task.wait(2)
