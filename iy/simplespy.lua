@@ -749,6 +749,7 @@ end
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
+                                                        print(all_trim(infoRoom[1]))
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue then
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
