@@ -766,7 +766,8 @@ end
                                                                 end
                                                             end
                                                         end
-                                                    elseif infoRoomValue > 1 then
+                                                    end
+                                                    if infoRoomValue > 1 then
                                                         print("Floor: "..infoRoomValue .. " | " all_trim(infoRoom[1]))
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue then
                                                             task.wait(1)
@@ -776,7 +777,7 @@ end
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
                                                                     print(NameRoom2.Name .. " | " .. RoomDungeons2)
-                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 and StatusDg.find("Dungeon Ends") < 1 then
+                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and StatusDg.find("Dungeon Ends") < 1 then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
