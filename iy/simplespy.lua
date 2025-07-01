@@ -733,9 +733,16 @@ end
                                 end
                         end
                     end)
+
+                    Tabs.Main:AddParagraph({
+                        Title = "Tween To Monster Information.",
+                        Content = "Tween To Monster Include :.\n- Auto Change Portal in Infernal Towen.\n- Auto TP Mid To Summer Inf."
+                    })
+                    local noSummerInf = false
                     local summerInf = false
                     local inMidSummerInf = false
                     local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
+
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
                         if VariableIndex.TweenToMonster then
@@ -753,6 +760,7 @@ end
                                                     if infoRoomValue > 1  and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue and not summerInf then
                                                             task.wait(1)
+                                                            noSummerInf = true
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
@@ -773,6 +781,7 @@ end
                                                     if infoRoomValue > 1 and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue and not summerInf then
                                                             task.wait(1)
+                                                            noSummerInf = true
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1)) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
@@ -796,6 +805,7 @@ end
                                                         end
                                                     end
                                                     if infoRoomValue > 1 and not summerInf then
+                                                        print(all_trim(infoRoom[1]) .. "== Portal: "..infoRoomValue)
                                                         if all_trim(infoRoom[1]) == "Portal: "..infoRoomValue then
                                                             task.wait(1)
                                                             summerInf = true
@@ -809,7 +819,7 @@ end
                                         local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
                                         Tween(newLoc, 500)
                                         inMidSummerInf = true
-                                    else
+                                    elseif noSummerInf then
                                         local closestEnemy = nil
                                         local closestDistance = math.huge
                                         playerposisi = playerPosition
