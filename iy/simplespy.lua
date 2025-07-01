@@ -749,16 +749,14 @@ end
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
-                                                        print(all_trim(infoRoom[1]))
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue then
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     RoomDungeons = NameRoom.Name
-                                                                    print(RoomDungeons .. " | " .. RoomDungeons2)
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 5 then
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -775,7 +773,7 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
-                                                                    RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     RoomDungeons = NameRoom2.Name
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 then
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
