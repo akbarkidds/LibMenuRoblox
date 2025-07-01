@@ -755,6 +755,7 @@ end
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
+                                                print("Portal: "..infoRoomValue)
                                                 local StatusDg = hudRoom.DungeonInfo.TextLabel.Text
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1  and not summerInf then
@@ -804,8 +805,8 @@ end
                                                             end
                                                         end
                                                     end
+                                                    
                                                     if infoRoomValue > 1 and not inMidSummerInf and infoRoomValue == 500 then
-                                                        print("Portal: "..infoRoomValue)
                                                         local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
                                                         Tween(newLoc, 500)
                                                         summerInf = true
