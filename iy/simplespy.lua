@@ -740,9 +740,7 @@ end
                     })
                     local noSummerInf = false
                     local summerInf = false
-                    local inMidSummerInf = false
                     local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
-
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
                         if VariableIndex.TweenToMonster then
@@ -804,17 +802,17 @@ end
                                                             end
                                                         end
                                                     end
-                                                    if infoRoomValue > 1 and not inMidSummerInf and infoRoomValue == 500 then
-                                                        local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
+                                                    local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
+                                                    local distanceNewLoc = (newLoc.Position - playerPosition).Magnitude
+                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 4 then
                                                         Tween(newLoc, 500)
                                                         summerInf = true
-                                                        inMidSummerInf = true
                                                     end
                                                 end
                                             end
                                         end
                                     end   
-                                    if noSummerInf then
+                                    if not summerInf and noSummerInf then
                                         local closestEnemy = nil
                                         local closestDistance = math.huge
                                         for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
