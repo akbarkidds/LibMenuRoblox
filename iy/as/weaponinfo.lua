@@ -1,4 +1,3 @@
--- Decompiled with Velocity Script Decompiler
 local v1 = {}
 local v2 = {
     ["Name"] = "Twinfang Axe",
