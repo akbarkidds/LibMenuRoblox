@@ -777,7 +777,7 @@ end
                                                                     playerinposition = playerinposition + 1
                                                                     print(RoomDungeons.." | "..NameRoom.Name)
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 3 then
-                                                                        RoomDungeons2 = NameRoom.Name
+                                                                        RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -795,7 +795,7 @@ end
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 3 then
-                                                                        RoomDungeons2 = NameRoom2.Name
+                                                                        RoomDungeons2 = "Room_"tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
