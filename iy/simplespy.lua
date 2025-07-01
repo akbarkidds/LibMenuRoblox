@@ -736,7 +736,7 @@ end
 
                     AutoSection:AddParagraph({
                         Title = "Tween To Monster Information.",
-                        Content = "Tween To Monster Include :.\n- Auto Change Portal in Infernal Towen.\n- Auto TP Mid To Summer Inf."
+                        Content = "Tween To Monster Include :\n- Auto Change Portal in Infernal Towen.\n- Auto TP Mid To Summer Inf."
                     })
                     local noSummerInf = false
                     local summerInf = false
@@ -753,10 +753,8 @@ end
                                         local hudRoom = game:GetService("Players").LocalPlayer.PlayerGui.Hud.UpContanier
                                         if hudRoom:FindFirstChild("Room") then
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
-                                            print(#infoRoom)
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
-                                                print("Portal: "..infoRoomValue)
                                                 local StatusDg = hudRoom.DungeonInfo.TextLabel.Text
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1  and not summerInf then
