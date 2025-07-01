@@ -747,6 +747,7 @@ end
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
+                                                local StatusDg = hudRoom.DungeonInfo.TextLabel.Text
                                                 if infoRoomValue ~= nil then
                                                     if infoRoomValue > 1 then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue then
@@ -755,7 +756,7 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 then
+                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 and StatusDg.find("Dungeon Ends") < 1 then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
@@ -773,7 +774,7 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 then
+                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 and StatusDg.find("Dungeon Ends") < 1 then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
@@ -901,7 +902,7 @@ end
                                     local defaultDungeon = workspace:FindFirstChild("__Main"):FindFirstChild("__Dungeon")
                                     if defaultDungeon:FindFirstChild("Dungeon") then
                                         print(table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")))
-                                        if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil then
+                                        if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil and game.PlaceId ~= 128336380114944 then
                                             local args = {
                                                 {
                                                     {
@@ -925,21 +926,59 @@ end
                                             game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args2))
                                             task.wait(5)
                                         end
+                                        local DungeonInfo = game:GetService("Players").LocalPlayer.PlayerGui.Hud
+                                        if DungeonInfo:FindFirstChild("UpContanier") then
+                                            if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
+                                                if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
+                                                    if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil and game.PlaceId == 128336380114944 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends") then
+                                                        local args = {
+                                                            {
+                                                                {
+                                                                    Event = "DungeonAction",
+                                                                    Action = "Create"
+                                                                },
+                                                                "\f"
+                                                            }
+                                                        }
+                                                        game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                                        task.wait(1)
+                                                        local args2= {
+                                                            {
+                                                                {
+                                                                    Event = "DungeonAction",
+                                                                    Action = "Start"
+                                                                },
+                                                                "\f"
+                                                            }
+                                                        }
+                                                        game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args2))
+                                                        task.wait(5)
+                                                    end
+                                                end
+                                            end
+                                        end
                                     else
-                                        if stayPlayerInDungeon > 5 then
-                                            local args = {
-                                                {
-                                                    {
-                                                        Event = "LeaveDungeon"
-                                                    },
-                                                    "\f"
-                                                }
-                                            }
-                                            game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                                            stayPlayerInDungeon = 0
-                                        elseif RoomDungeons == RoomDungeons2 then
-                                            stayPlayerInDungeon = stayPlayerInDungeon + 1
-                                            task.wait(1)
+                                        local DungeonInfo = game:GetService("Players").LocalPlayer.PlayerGui.Hud
+                                        if DungeonInfo:FindFirstChild("UpContanier") then
+                                            if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
+                                                if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
+                                                    if stayPlayerInDungeon > 5 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends") then
+                                                        local args = {
+                                                            {
+                                                                {
+                                                                    Event = "LeaveDungeon"
+                                                                },
+                                                                "\f"
+                                                            }
+                                                        }
+                                                        game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                                        stayPlayerInDungeon = 0
+                                                    elseif RoomDungeons == RoomDungeons2 then
+                                                        stayPlayerInDungeon = stayPlayerInDungeon + 1
+                                                        task.wait(1)
+                                                    end
+                                                end
+                                            end
                                         end
                                     end
                                 end
