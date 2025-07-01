@@ -756,7 +756,7 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom.Name and playerinposition > 5 and string.find(StatusDg, "Dungeon Ends") == nil then
+                                                                    if RoomDungeons ~= NameRoom.Name and  playerinposition > 5 and not string.find(StatusDg, "Dungeon Ends", 1, false) then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
@@ -776,7 +776,7 @@ end
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
                                                                     print(NameRoom2.Name .. " | " .. RoomDungeons2)
-                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and string.find(StatusDg, "Dungeon Ends") == nil then
+                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and not string.find(StatusDg, "Dungeon Ends", 1, false) then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
@@ -932,7 +932,7 @@ end
                                         if DungeonInfo:FindFirstChild("UpContanier") then
                                             if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
                                                 if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
-                                                    if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil and game.PlaceId == 128336380114944 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends") then
+                                                    if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil and game.PlaceId == 128336380114944 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends", false) then
                                                         local args = {
                                                             {
                                                                 {
