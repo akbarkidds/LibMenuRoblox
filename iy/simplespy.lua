@@ -814,12 +814,11 @@ end
                                         local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
 
                                         while closestEnemy:FindFirstChild("HealthBar") do
-                                            if isAttacking == false then
+                                            if isAttacking == false or distancex >= 5 then
                                                 Tween(closestEnemy.HumanoidRootPart, 500)
                                             end
                                             local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
                                             local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
-                                            
                                             if amount and amount:IsA("TextLabel") then
                                                 local health = tonumber(string.match(amount.Text, "(%d+)"))
                                                 if not health or health <= 0 then
