@@ -774,6 +774,7 @@ end
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
                                                                     local RoomDungeon = NameRoom2.FirePortal
                                                                     playerinposition = playerinposition + 1
+                                                                    print(NameRoom2.Name .. " | " .. RoomDungeons2)
                                                                     if RoomDungeons ~= NameRoom.Name and playerinposition > 5 and StatusDg.find("Dungeon Ends") < 1 then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
