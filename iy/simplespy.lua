@@ -806,7 +806,6 @@ end
                                                             end
                                                         end
                                                     end
-                                                    
                                                     if infoRoomValue > 1 and not inMidSummerInf and infoRoomValue == 500 then
                                                         local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
                                                         Tween(newLoc, 500)
@@ -820,7 +819,6 @@ end
                                     if noSummerInf then
                                         local closestEnemy = nil
                                         local closestDistance = math.huge
-                                        playerposisi = playerPosition
                                         for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                             if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
                                                 if isValidEnemy(enemy) then
@@ -860,6 +858,7 @@ end
                                             end
                                         end
                                     end
+                                    playerposisi = playerPosition
                                 end
                             end
                         end
