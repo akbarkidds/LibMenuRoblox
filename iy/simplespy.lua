@@ -755,6 +755,12 @@ end
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
                                                 local StatusDg = hudRoom.DungeonInfo.TextLabel.Text
                                                 if infoRoomValue ~= nil then
+                                                    local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
+                                                    local distanceNewLoc = (newLoc.Position - playerPosition).Magnitude
+                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 3 then
+                                                        Tween(newLoc, 500)
+                                                        summerInf = true
+                                                    end
                                                     if infoRoomValue > 1  and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue and not summerInf then
                                                             task.wait(1)
@@ -799,12 +805,6 @@ end
                                                                 end
                                                             end
                                                         end
-                                                    end
-                                                    local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
-                                                    local distanceNewLoc = (newLoc.Position - playerPosition).Magnitude
-                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 3 then
-                                                        Tween(newLoc, 500)
-                                                        summerInf = true
                                                     end
                                                 end
                                             end
