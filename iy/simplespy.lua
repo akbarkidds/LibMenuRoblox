@@ -14,7 +14,7 @@ local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local CoreGui = game:GetService('StarterGui')
 local UserInputService = game:GetService('UserInputService')
-local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name
 
 -- // // // Locals // // // --
 local LocalPlayer = Players.LocalPlayer
@@ -804,7 +804,7 @@ end
                                                     end
                                                     local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
                                                     local distanceNewLoc = (newLoc.Position - playerPosition).Magnitude
-                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 4 then
+                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 3 then
                                                         Tween(newLoc, 500)
                                                         summerInf = true
                                                     end
