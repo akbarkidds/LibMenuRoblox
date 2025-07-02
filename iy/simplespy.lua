@@ -824,7 +824,7 @@ end
                                             local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
 
                                             while closestEnemy:FindFirstChild("HealthBar") do
-                                                if isAttacking == false then
+                                                if isAttacking == false or distancex > 4 then
                                                     Tween(closestEnemy.HumanoidRootPart, 500)
                                                 end
                                                 if isAttacking then
@@ -966,26 +966,25 @@ end
                                                 end
                                             end
                                         end
-                                    else
-                                        local DungeonInfo = game:GetService("Players").LocalPlayer.PlayerGui.Hud
-                                        if DungeonInfo:FindFirstChild("UpContanier") then
-                                            if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
-                                                if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
-                                                    if stayPlayerInDungeon > 5 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends", 1) ~= nil then
-                                                        local args = {
+                                    end
+                                    local DungeonInfo = game:GetService("Players").LocalPlayer.PlayerGui.Hud
+                                    if DungeonInfo:FindFirstChild("UpContanier") then
+                                        if DungeonInfo.UpContanier:FindFirstChild("DungeonInfo") then
+                                            if DungeonInfo.UpContanier.DungeonInfo:FindFirstChild("TextLabel") then
+                                                if stayPlayerInDungeon > 5 and string.find(DungeonInfo.UpContanier.DungeonInfo.TextLabel.Text, "Dungeon Ends", 1) ~= nil then
+                                                    local args = {
+                                                        {
                                                             {
-                                                                {
-                                                                    Event = "LeaveDungeon"
-                                                                },
-                                                                "\f"
-                                                            }
+                                                                Event = "LeaveDungeon"
+                                                            },
+                                                            "\f"
                                                         }
-                                                        game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                                                        stayPlayerInDungeon = 0
-                                                    elseif RoomDungeons == RoomDungeons2 then
-                                                        stayPlayerInDungeon = stayPlayerInDungeon + 1
-                                                        task.wait(1)
-                                                    end
+                                                    }
+                                                    game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                                    stayPlayerInDungeon = 0
+                                                elseif RoomDungeons == RoomDungeons2 then
+                                                    stayPlayerInDungeon = stayPlayerInDungeon + 1
+                                                    task.wait(1)
                                                 end
                                             end
                                         end
