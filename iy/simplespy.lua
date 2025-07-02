@@ -747,7 +747,7 @@ end
                             while VariableIndex.TweenToMonster and task.wait() do
                                 if VariableIndex.TweenToMonster then
                                     local playerPosition = humanoidRootPart.Position
-                                    if game.PlaceId == 128336380114944 and playerposisi == playerPosition then
+                                    if game.PlaceId == 128336380114944 then
                                         local hudRoom = game:GetService("Players").LocalPlayer.PlayerGui.Hud.UpContanier
                                         if hudRoom:FindFirstChild("Room") then
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
@@ -758,7 +758,6 @@ end
                                                     if infoRoomValue > 1  and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue and not summerInf then
                                                             task.wait(1)
-                                                            noSummerInf = true
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
@@ -779,7 +778,6 @@ end
                                                     if infoRoomValue > 1 and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue and not summerInf then
                                                             task.wait(1)
-                                                            noSummerInf = true
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1)) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
                                                                 if NameRoom2:FindFirstChild("FirePortal") then
@@ -812,7 +810,7 @@ end
                                             end
                                         end
                                     end   
-                                    if not summerInf and noSummerInf then
+                                    if not summerInf then
                                         local closestEnemy = nil
                                         local closestDistance = math.huge
                                         for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
@@ -854,7 +852,6 @@ end
                                             end
                                         end
                                     end
-                                    playerposisi = playerPosition
                                 end
                             end
                         end
