@@ -763,7 +763,6 @@ end
                                                     end
                                                     if infoRoomValue > 1  and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue and not summerInf then
-                                                            task.wait(1)
                                                             if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
@@ -783,23 +782,16 @@ end
                                                     end
                                                     if infoRoomValue > 1 and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue and not summerInf then
-                                                            task.wait(1)
-                                                            if workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1)) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
-                                                                local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..(infoRoomValue-1))
-                                                                if NameRoom2:FindFirstChild("FirePortal") then
-                                                                    local RoomDungeon = NameRoom2.FirePortal
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
+                                                                local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
+                                                                if NameRoom2:FindFirstChild("Portal") then
+                                                                    local RoomDungeon = NameRoom2.Portal
                                                                     playerinposition = playerinposition + 1
-                                                                    print(NameRoom2.Name .. " | " .. RoomDungeons2)
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and string.find(StatusDg, "Dungeon Ends", 1) == nil then
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
-                                                                        task.wait(2)
-                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt,0)
-                                                                        task.wait()
-                                                                        fireproximityprompt(RoomDungeon.ProximityPrompt,1)
-                                                                        task.wait(1)
                                                                         playerinposition = 0
                                                                     end
                                                                 end
@@ -1086,24 +1078,6 @@ end
                             end
                         end
                     end)
-
-                    Tabs.Dungeon:AddButton({
-                        Title = "Teleport to Dungeon",
-                        Callback = function()
-                            if locations[Teleport_Target] then
-                                tweenFlyTo(locations[Teleport_Target], 500, function()
-                                    local dungeonPosition = getDungeonPosition()
-                                    if dungeonPosition then
-                                        tweenFlyTo(dungeonPosition, 500)
-                                    else
-                                        print("âŒ No Dungeon available to travel to!")
-                                    end
-                                end)
-                            else
-                                print("âŒ Invalid Teleport Target:", Teleport_Target)
-                            end
-                        end
-                    })
 
                     -- ======== Teleport =======
 
