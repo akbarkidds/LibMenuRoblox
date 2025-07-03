@@ -597,6 +597,7 @@ end
                         if not closestMonsterID or not petPositions then
                             return
                         end
+                        local modeattack = tostring(selectAutoFarm)
                         local args = {
                             {
                                 {
@@ -605,7 +606,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                tostring(selectAutoFarm)
+                                modeattack
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -632,7 +633,6 @@ end
                                     isAttacking = false
                                 end
                                 wait(0.5)
-                                continue
                             end
                             local closestMonster = getClosestMonster()
                             local equippedPets = getEquippedPets()
