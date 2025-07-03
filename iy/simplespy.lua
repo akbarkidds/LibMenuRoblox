@@ -1026,9 +1026,26 @@ end
                                     task.wait(5)
                                 end
                             end
-                            
-                            if DungeonSelect == nil or #DungeonSelect == 0 then
-                                notif("Select Dungeon Rank First", 2)
+                        end
+                    end)
+
+                    local toggleAutoJoinSummerWithFriend = Tabs.Dungeon:AddToggle("AutoJoinSummerWithFriend", { Title = "Auto Join Summer With Friend", Default = false })
+                    toggleAutoJoinSummerWithFriend:OnChanged(function()
+                        if toggleAutoJoinSummerWithFriend.Value then
+                            while toggleAutoJoinSummerWithFriend.Value and task.wait() do
+                                if game.PlaceId ~= 128336380114944 then
+                                    local args = {
+                                        {
+                                            {
+                                                Dungeon = 8761983307,
+                                                Event = "InfiniteModeAction",
+                                                Action = "Join"
+                                            },
+                                            "\f"
+                                        }
+                                    }
+                                    game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                end
                             end
                         end
                     end)
