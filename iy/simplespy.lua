@@ -158,7 +158,6 @@ end
             local RoomDungeons = ""
             local RoomDungeons2 = 0
             local stayPlayerInDungeon = 0
-            local selectAutoFarm
             local VariableIndex = {
                 AutoFarm = false,
                 TweenToMonster = false,
@@ -597,7 +596,6 @@ end
                         if not closestMonsterID or not petPositions then
                             return
                         end
-                        local modeattack = tostring(selectAutoFarm)
                         local args = {
                             {
                                 {
@@ -606,7 +604,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                modeattack
+                                "\005"
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -633,6 +631,7 @@ end
                                     isAttacking = false
                                 end
                                 wait(0.5)
+                                continue
                             end
                             local closestMonster = getClosestMonster()
                             local equippedPets = getEquippedPets()
@@ -680,31 +679,6 @@ end
                     end)
 
                     local AutoSection = Tabs.Auto:AddSection("Config Auto")
-                    local ToggleConfigAutoFarm = AutoSection:AddDropdown("ConfigAutoFarm", {
-                        Title = "Select Config Farm",
-                        Description = "If Pet Cant Auto Attack.",
-                        Values = {"5", "6", "7", "8"},
-                        Multi = false,
-                        Default = "5",
-                    })
-
-                    ToggleConfigAutoFarm:OnChanged(function(Value)
-                        local RankNunber = 005
-                                if Value == "5" then
-                                    RankNunber = 005
-                                end
-                                if Value == "6" then
-                                    RankNunber = 006
-                                end
-                                if Value == "7" then
-                                    RankNunber = 007
-                                end
-                                if Value == "8" then
-                                    RankNunber = 8
-                                end
-                            end
-                            selectAutoFarm = 005
-                    end)
                     local Toggle_AutoFarm = AutoSection:AddToggle("Toggle_AutoFarm", { Title = "Auto Farm", Default = false })
                     Toggle_AutoFarm:OnChanged(function()
                         VariableIndex.AutoFarm = Toggle_AutoFarm.Value
