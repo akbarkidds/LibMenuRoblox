@@ -605,7 +605,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                "\005"
+                                tostring(selectAutoFarm)
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -685,13 +685,26 @@ end
                         Description = "If Pet Cant Auto Attack.",
                         Values = {"5", "6", "7", "8"},
                         Multi = false,
-                        Default = 1,
+                        Default = "5",
                     })
 
                     ToggleConfigAutoFarm:OnChanged(function(Value)
-                        selectAutoFarm = Values
+                        local RankNunber = 005
+                                if Value == "5" then
+                                    RankNunber = 005
+                                end
+                                if Value == "6" then
+                                    RankNunber = 006
+                                end
+                                if Value == "7" then
+                                    RankNunber = 007
+                                end
+                                if Value == "8" then
+                                    RankNunber = 8
+                                end
+                            end
+                            selectAutoFarm = 005
                     end)
-
                     local Toggle_AutoFarm = AutoSection:AddToggle("Toggle_AutoFarm", { Title = "Auto Farm", Default = false })
                     Toggle_AutoFarm:OnChanged(function()
                         VariableIndex.AutoFarm = Toggle_AutoFarm.Value
