@@ -158,6 +158,7 @@ end
             local RoomDungeons = ""
             local RoomDungeons2 = 0
             local stayPlayerInDungeon = 0
+            local selectAutoFarm
             local VariableIndex = {
                 AutoFarm = false,
                 TweenToMonster = false,
@@ -604,7 +605,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                "\8"
+                                "\005"
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -679,6 +680,18 @@ end
                     end)
 
                     local AutoSection = Tabs.Auto:AddSection("Config Auto")
+                    local ToggleConfigAutoFarm = AutoSection:AddDropdown("ConfigAutoFarm", {
+                        Title = "Select Config Farm",
+                        Description = "If Pet Cant Auto Attack.",
+                        Values = {"5", "6", "7", "8"},
+                        Multi = false,
+                        Default = 1,
+                    })
+
+                    ToggleConfigAutoFarm:OnChanged(function(Value)
+                        selectAutoFarm = Values
+                    end)
+
                     local Toggle_AutoFarm = AutoSection:AddToggle("Toggle_AutoFarm", { Title = "Auto Farm", Default = false })
                     Toggle_AutoFarm:OnChanged(function()
                         VariableIndex.AutoFarm = Toggle_AutoFarm.Value
