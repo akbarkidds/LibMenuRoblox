@@ -137,6 +137,7 @@ end
 
     --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
     local Tabs = {
+        Log = Window:AddTab({ Title = "Information", Icon = "book-alert" }),
         Main = Window:AddTab({ Title = "Main", Icon = "gamepad-2" }),
         Auto = Window:AddTab({ Title = "Auto", Icon = "repeat" }),
         Dungeon = Window:AddTab({ Title = "Dungeon", Icon = "skull" }),
@@ -603,7 +604,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                "\005"
+                                "\8"
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -632,7 +633,6 @@ end
                                 wait(0.5)
                                 continue
                             end
-                            local enemiesFolder = workspace:FindFirstChild("__Main") and workspace.__Main:FindFirstChild("__Enemies") and workspace.__Main.__Enemies:FindFirstChild("Client")
                             local closestMonster = getClosestMonster()
                             local equippedPets = getEquippedPets()
                             
@@ -791,6 +791,7 @@ end
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                        humanoidRootPart.Position = RoomDungeon.Position
                                                                         Tween(RoomDungeon, 500)
                                                                         playerinposition = 0
                                                                     end
@@ -1049,7 +1050,7 @@ end
                             end
                         end
                     end)
-
+                    
                     local toggleAutoJoinInfernalTower = Tabs.Dungeon:AddToggle("AutoJoinInfernalTower", { Title = "Auto Join Infernal Tower", Default = false })
                     toggleAutoJoinInfernalTower:OnChanged(function()
                         if toggleAutoJoinInfernalTower.Value then
