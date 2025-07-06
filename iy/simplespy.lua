@@ -168,16 +168,6 @@ end
             }
             
             -- ==================================== Start Function Group ============================
-                    local function firetouchinterest(totouch, whattotouchwith,nilvalue)
-                        pcall(function()
-                            local clone = totouch:Clone()
-                            local orgpos = totouch.CFrame
-                            totouch.CFrame = whattotouchwith.CFrame
-                            wait(0.5)
-                            totouch.CFrame = orgpos
-                            clone:Destroy()
-                        end)
-                    end
                 -- ===================================== Function =====================================
 
                     local function notif(message, duration)
@@ -214,8 +204,8 @@ end
                         end
                     end
 
-                    local function removeNumbers(string)
-                        local x = string:gsub("%d", "")
+                    local function removeNumbers(stringx)
+                        local x = stringx:gsub("%d", "")
                         return x
                     end
                 -- ============================= à¸¥à¸³à¸”à¸±à¸šà¸‡à¸²à¸™ =============================
@@ -278,25 +268,6 @@ end
                         
                         local hp = tonumber(string.match(amount.Text, "(%d+)"))
                         return hp and hp > 0
-                    end
-
-                    local function getDungeonPosition()
-                        local dungeonFolder = workspace:FindFirstChild("__Main") and workspace.__Main:FindFirstChild("__Dungeon")
-                        if dungeonFolder and #dungeonFolder:GetChildren() > 0 then
-                            for _, obj in ipairs(dungeonFolder:GetChildren()) do
-                                if obj:IsA("Model") then
-                                    print("ðŸ° Found Dungeon (Model):", obj.Name, "| Position:", obj.WorldPivot.Position)
-                                    return obj.WorldPivot.Position
-                                end
-                                if obj:IsA("Part") then
-                                    print("ðŸ° Found Dungeon (Part):", obj.Name, "| Position:", obj.Position)
-                                    return obj.Position
-                                end
-                            end
-                        end
-
-                        print("âš ï¸ No Dungeon Found!")
-                        return nil
                     end
 
                     local function Autoquest()
@@ -393,18 +364,14 @@ end
                     local Toggle_AutoArise = Main:AddToggle("autoarise", {Title = "Auto Arise", Default = false})
                     Toggle_AutoArise:OnChanged(function()
                         if Toggle_AutoArise.Value then
-                            -- Run in a separate task to prevent blocking
                                 while Toggle_AutoArise.Value do
-                                    -- Dynamically find the closest enemy with 0 HP
                                     local closestEnemy = nil
-                                    local closestDistance = math.huge  -- Start with a large value for distance
+                                    local closestDistance = math.huge
                     
-                                    -- Get the player's character
                                     local player = game.Players.LocalPlayer
                                     local playerCharacter = player.Character or player.CharacterAdded:Wait()
                                     local playerPosition = playerCharacter:WaitForChild("HumanoidRootPart").Position
                     
-                                    -- Iterate through all enemies in the game
                                     for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
                                             local healthBar = enemy:FindFirstChild("HealthBar")
@@ -415,12 +382,11 @@ end
                     
                                             if title and amount and title:IsA("TextLabel") and amount:IsA("TextLabel") then
                                                 local hp = tonumber(string.match(amount.Text, "(%d+)"))
-                                                if hp and hp == 0 then  -- Only consider enemies with 0 HP
-                                                    -- Calculate the distance to the player
+                                                if hp and hp == 0 then
+
                                                     local enemyPosition = enemy:FindFirstChild("HumanoidRootPart").Position
                                                     local distance = (playerPosition - enemyPosition).magnitude
                     
-                                                    -- If this enemy is closer than the previous one, select it
                                                     if distance < closestDistance then
                                                         closestEnemy = enemy
                                                         closestDistance = distance
@@ -429,52 +395,42 @@ end
                                             end
                                         end
                                     end
-                    
-                                    -- If we found a valid closest enemy, send the capture event
+
                                     if closestEnemy then
                                         local args = {
                                             [1] = {
                                                 [1] = {
                                                     ["Event"] = "EnemyCapture",
-                                                    ["Enemy"] = closestEnemy.Name  -- Use the dynamically found enemy's name
+                                                    ["Enemy"] = closestEnemy.Name 
                                                 },
                                                 [2] = "\4"
                                             }
                                         }
-                    
-                                        -- Fire the event to capture the closest enemy with 0 HP
+
                                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
                                     end
-                    
-                                    -- Wait before checking for the next enemy
                                     task.wait()
                                 end
                         end
                     end)
                     
-                    -- Auto Destroy
                     local toggle_autodestroy = Main:AddToggle("autodestroy", {Title = "Auto Destroy", Default = false})
                     toggle_autodestroy:OnChanged(function()
                         if toggle_autodestroy.Value then
-                            -- Run in a separate task to prevent blocking
                                 while toggle_autodestroy.Value do
-                                    -- Dynamically find the closest enemy
                                     local closestEnemy = nil
-                                    local closestDistance = math.huge  -- Start with a large value for distance
-                    
-                                    -- Get the player's character
+                                    local closestDistance = math.huge
+
                                     local player = game.Players.LocalPlayer
                                     local playerCharacter = player.Character or player.CharacterAdded:Wait()
                                     local playerPosition = playerCharacter:WaitForChild("HumanoidRootPart").Position
-                    
-                                    -- Iterate through all enemies in the game
+
                                     for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-                                            -- Calculate the distance to the player
+                                            
                                             local enemyPosition = enemy:FindFirstChild("HumanoidRootPart").Position
                                             local distance = (playerPosition - enemyPosition).magnitude
-                    
-                                            -- If this enemy is closer than the previous one, select it
+
                                             if distance < closestDistance then
                                                 closestEnemy = enemy
                                                 closestDistance = distance
@@ -482,23 +438,18 @@ end
                                         end
                                     end
                     
-                                    -- If we found a valid closest enemy, send the EnemyDestroy event
                                     if closestEnemy then
                                         local args = {
                                             [1] = {
                                                 [1] = {
                                                     ["Event"] = "EnemyDestroy",
-                                                    ["Enemy"] = closestEnemy.Name  -- Use the dynamically found enemy's name
+                                                    ["Enemy"] = closestEnemy.Name
                                                 },
                                                 [2] = "\4"
                                             }
                                         }
-                    
-                                        -- Fire the event to destroy the closest enemy
                                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
                                     end
-                    
-                                    -- Wait before checking for the next enemy
                                     task.wait()
                                 end
                         end
@@ -691,56 +642,47 @@ end
                     local autohit = AutoSection:AddToggle("autohit", {Title = "Auto Attack", Default = false})
                     autohit:OnChanged(function()
                         if autohit.Value then
-                            -- Run in a separate task to prevent blocking
                                 while autohit.Value do
-                                    -- Dynamically find the closest enemy
                                     local closestEnemy = nil
-                                    local closestDistance = math.huge  -- Start with a large value for distance
-                                    -- Get the player's character
+                                    local closestDistance = math.huge 
                                     local player = game.Players.LocalPlayer
                                     local playerCharacter = player.Character or player.CharacterAdded:Wait()
                                     local playerPosition = playerCharacter:WaitForChild("HumanoidRootPart").Position
-                                    -- Iterate through all enemies in the game
                                     for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-                                            -- Calculate the distance to the player
                                             local enemyPosition = enemy:FindFirstChild("HumanoidRootPart").Position
                                             local distance = (playerPosition - enemyPosition).magnitude
-                                            -- If this enemy is closer than the previous one, select it
                                             if distance < closestDistance then
                                                 closestEnemy = enemy
                                                 closestDistance = distance
                                             end
                                         end
                                     end
-                                    -- If we found a valid closest enemy, send the PunchAttack event
                                     if closestEnemy then
                                         local args = {
                                             [1] = {
                                                 [1] = {
                                                     ["Event"] = "PunchAttack",
-                                                    ["Enemy"] = closestEnemy.Name  -- Use the dynamically found enemy's name
+                                                    ["Enemy"] = closestEnemy.Name
                                                 },
                                                 [2] = "\4"
                                             }
                                         }
-                    
-                                        -- Fire the event to hit the closest enemy
                                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
                                     end
-                                    -- Wait before checking for the next enemy
                                     task.wait()
                                 end
                         end
                     end)
 
-                    AutoSection:AddParagraph({
-                        Title = "Tween To Monster Information.",
-                        Content = "Tween To Monster Include :\n- Auto Change Portal in Infernal Towen.\n- Auto TP Mid To Summer Inf."
+                -- ======== Auto Farm =======
+                    local DungeonSectiom = Tabs.Dungeon:AddSection("")
+                    DungeonSectiom:AddParagraph({
+                        Title = "Tween To Enemy Information.",
+                        Content = "Tween To Enemy Include :\n- Auto Change Portal in Infernal Town.\n- Auto TP Mid To Summer Inf."
                     })
-                    local noSummerInf = false
                     local summerInf = false
-                    local ToggleTweenToMonster = AutoSection:AddToggle("ToggleTweenToMonster", { Title = "Tween To Monster", Default = false })
+                    local ToggleTweenToMonster = DungeonSectiom:AddToggle("ToggleTweenToMonster", { Title = "Tween To Enemy In All Dungeon", Default = false })
                     ToggleTweenToMonster:OnChanged(function(Value)
                         VariableIndex.TweenToMonster = Value
                         if VariableIndex.TweenToMonster then
@@ -788,11 +730,12 @@ end
                                                                     local RoomDungeon = NameRoom2.Portal
                                                                     playerinposition = playerinposition + 1
                                                                     if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and string.find(StatusDg, "Dungeon Ends", 1) == nil then
+                                                                        LocalCharacter:SetAttribute("InTp", true)
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
-                                                                        player:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                        humanoidRootPart.Position = RoomDungeon.Position
-                                                                        Tween(RoomDungeon, 500)
+                                                                        LocalPlayer:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                        LocalCharacter:PivotTo(RoomDungeon.CFrame)
+                                                                        LocalCharacter:SetAttribute("InTp", false)
                                                                         playerinposition = 0
                                                                     end
                                                                 end
@@ -802,60 +745,56 @@ end
                                                 end
                                             end
                                         end
-                                    end   
-                                    if not summerInf then
-                                        local closestEnemy = nil
-                                        local closestDistance = math.huge
-                                        for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
-                                            if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
-                                                if isValidEnemy(enemy) then
-                                                    local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
-                                                    if distance < closestDistance then
-                                                        closestDistance = distance
-                                                        closestEnemy = enemy
+                                        if not summerInf then
+                                            local closestEnemy = nil
+                                            local closestDistance = math.huge
+                                            for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
+                                                if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
+                                                    if isValidEnemy(enemy) then
+                                                        local distance = (enemy.HumanoidRootPart.Position - playerPosition).Magnitude
+                                                        if distance < closestDistance then
+                                                            closestDistance = distance
+                                                            closestEnemy = enemy
+                                                        end
                                                     end
                                                 end
                                             end
-                                        end
-                                        
-                                        if closestEnemy then
-                                            player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
-                                            closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
-                                            task.wait()
-                                            local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
-
-                                            while closestEnemy:FindFirstChild("HealthBar") do
-                                                if isAttacking == false or distancex > 4 then
-                                                    Tween(closestEnemy.HumanoidRootPart, 500)
-                                                end
-                                                if isAttacking then
+                                            
+                                            if closestEnemy then
+                                                player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
+                                                closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
+                                                task.wait()
+                                                local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
+    
+                                                while closestEnemy:FindFirstChild("HealthBar") do
+                                                    if isAttacking == false or distancex > 4 then
+                                                        Tween(closestEnemy.HumanoidRootPart, 500)
+                                                    end
                                                     playerinposition = 0
                                                     stayPlayerInDungeon = 0
-                                                end
-                                                local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
-                                                local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
-                                                if amount and amount:IsA("TextLabel") then
-                                                    local health = tonumber(string.match(amount.Text, "(%d+)"))
-                                                    if not health or health <= 0 then
-                                                        isAttacking = false
-                                                        break
+                                                    local healthBar = closestEnemy.HealthBar:FindFirstChild("Main")
+                                                    local amount = healthBar and healthBar:FindFirstChild("Bar") and healthBar.Bar:FindFirstChild("Amount")
+                                                    if amount and amount:IsA("TextLabel") then
+                                                        local health = tonumber(string.match(amount.Text, "(%d+)"))
+                                                        if not health or health <= 0 then
+                                                            isAttacking = false
+                                                            break
+                                                        end
                                                     end
+                                                    task.wait()
                                                 end
-                                                task.wait()
                                             end
                                         end
-                                    end
+                                    end   
                                 end
                             end
                         end
                     end)
 
-                -- ======== Auto Farm =======
-
                     local DungeonSelect = {}
                     local DungeonList = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"}
 
-                    local Dungeon1 = Tabs.Dungeon:AddDropdown("MultiDropdown", {
+                    local Dungeon1 = DungeonSectiom:AddDropdown("MultiDropdown", {
                         Title = "Select Rank",
                         Description = "Select Rank Dungeon.",
                         Values = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"},
@@ -903,7 +842,7 @@ end
                         DungeonSelect = Values
                     end)
                     
-                    local toggleAutoJoinDungeon = Tabs.Dungeon:AddToggle("AutoJoinDungeon", { Title = "Auto Join Dungeon / Rejoin / Leave", Default = false })
+                    local toggleAutoJoinDungeon = DungeonSectiom:AddToggle("AutoJoinDungeon", { Title = "Auto Join Dungeon / Rejoin / Leave", Default = false })
                     toggleAutoJoinDungeon:OnChanged(function()
                         VariableIndex.AutoJoinDungeon = toggleAutoJoinDungeon.Value
                         if VariableIndex.AutoJoinDungeon then
@@ -998,7 +937,9 @@ end
                         end
                     end)
 
-                    local toggleAutoJoinSummer = Tabs.Dungeon:AddToggle("AutoJoinSummer", { Title = "Auto Join Summer", Default = false })
+                    local SummerSectiom = Tabs.Dungeon:AddSection("Summer Inf")
+
+                    local toggleAutoJoinSummer = SummerSectiom:AddToggle("AutoJoinSummer", { Title = "Auto Join Summer", Default = false })
                     toggleAutoJoinSummer:OnChanged(function()
                         if toggleAutoJoinSummer.Value then
                             while toggleAutoJoinSummer.Value and task.wait() do
@@ -1030,28 +971,42 @@ end
                         end
                     end)
 
-                    local toggleAutoJoinSummerWithFriend = Tabs.Dungeon:AddToggle("AutoJoinSummerWithFriend", { Title = "Auto Join Summer With Friend", Default = false })
+
+                    local toggleAutoJoinSummerWithFriend = SummerSectiom:AddToggle("AutoJoinSummerWithFriend", { Title = "Auto Join Summer With Friend", Default = false })
                     toggleAutoJoinSummerWithFriend:OnChanged(function()
-                        if toggleAutoJoinSummerWithFriend.Value then
-                            while toggleAutoJoinSummerWithFriend.Value and task.wait() do
+                        while toggleAutoJoinSummerWithFriend.Value and task.wait(0.2) do
+                            if toggleAutoJoinSummerWithFriend.Value then
                                 if game.PlaceId ~= 128336380114944 then
-                                    local args = {
-                                        {
-                                            {
-                                                Dungeon = 8761983307,
-                                                Event = "InfiniteModeAction",
-                                                Action = "Join"
-                                            },
-                                            "\f"
-                                        }
-                                    }
-                                    game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                    local playerGuiInfinite = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus
+                                    if game:GetService("Players").LocalPlayer.PlayerGui.Menus:FindFirstChild("InfiniteMode") ~= nil then
+                                        playerGuiInfinite = game:GetService("Players").LocalPlayer.PlayerGui.Menus
+                                    end
+                                    if playerGuiInfinite:FindFirstChild("InfiniteMode") ~= nil then
+                                        local infiniteMode = playerGuiInfinite.InfiniteMode.InDungeon.DungeonPlayers
+                                        local UserId = game:GetService("Players").LocalPlayer.UserId
+                                        local checkGuilistPlayer = playerGuiInfinite.InfiniteMode.List.ScrollingFrame:GetChildren()
+                                        if infiniteMode:FindFirstChild(UserId) == nil and #checkGuilistPlayer > 2 then
+                                            local args = {
+                                                {
+                                                    {
+                                                        Dungeon = 8777230766,
+                                                        Event = "InfiniteModeAction",
+                                                        Action = "Join"
+                                                    },
+                                                    "\f"
+                                                }
+                                            }
+                                            game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                                            task.wait(2)
+                                        end
+                                    end
                                 end
                             end
                         end
                     end)
                     
-                    local toggleAutoJoinInfernalTower = Tabs.Dungeon:AddToggle("AutoJoinInfernalTower", { Title = "Auto Join Infernal Tower", Default = false })
+                    local InfernalSectiom = Tabs.Dungeon:AddSection("Infernal Tower")
+                    local toggleAutoJoinInfernalTower = InfernalSectiom:AddToggle("AutoJoinInfernalTower", { Title = "Auto Join Infernal Tower", Default = false })
                     toggleAutoJoinInfernalTower:OnChanged(function()
                         if toggleAutoJoinInfernalTower.Value then
                             while toggleAutoJoinInfernalTower.Value and task.wait() do
@@ -1073,7 +1028,8 @@ end
                         end
                     end)
 
-                    local Toggle_AutoRankTest = Tabs.Dungeon:AddToggle("Toggle_AutoRankTest", { Title = "Auto Up Rank", Default = false })
+                    local RankUpSectiom = Tabs.Dungeon:AddSection("Rank Up")
+                    local Toggle_AutoRankTest = RankUpSectiom:AddToggle("Toggle_AutoRankTest", { Title = "Auto Up Rank", Default = false })
                     Toggle_AutoRankTest:OnChanged(function()
                         local rankUp = false
                         while Toggle_AutoRankTest.Value and not rankUp do
