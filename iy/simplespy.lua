@@ -13,14 +13,17 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local CoreGui = game:GetService('StarterGui')
+local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService('UserInputService')
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name
+local GuiFunctions = require(game:GetService("ReplicatedStorage").SharedModules.Others.GuiFunctions)
+local ExtraFunctions = require(game:GetService("ReplicatedStorage").SharedModules.ExtraFunctions)
+local PetsInfo = require(game:GetService("ReplicatedStorage").Indexer.PetsInfo)
 
 -- // // // Locals // // // --
 local LocalPlayer = Players.LocalPlayer
 local LocalCharacter = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local HumanoidRootPart = LocalCharacter:FindFirstChild("HumanoidRootPart")
-local TweenService = game:GetService("TweenService")
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
@@ -51,20 +54,27 @@ local mapName = {
     ["Hurricane World"] = "SlimeWorld",
     ["Hurricane Island"] = "SlimeWorld",
 }
-
-
+local screenSize = Workspace.CurrentCamera.ViewportSize.Y
 if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then 
 --<>----<>----<>----< Main Script >----<>----<>----<>--
     print("[Akbar Hub | "..GameName.."]")
-    local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/FischMain.lua"))()
+    local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/Gui/Fluent.lua"))()
     local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/saveManager.lua"))()
     local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/InterfaceManager.lua"))()
-    
+    local MenuHight = 0
+    local MenuWidth = 0
+    if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
+        MenuHight = 350
+        MenuWidth = 600
+    else
+        MenuHight = 450
+        MenuWidth = 700
+    end
     local Window = Fluent:CreateWindow({
         Title = "Akbar Hub | "..GameName,
         SubTitle = "v1.6",
         TabWidth = 150,
-        Size = UDim2.fromOffset(600, 400),
+        Size = UDim2.fromOffset(MenuWidth, MenuHight),
         Acrylic = false,
         Theme = "Darker",
         MinimizeKey = Enum.KeyCode.LeftControl
@@ -84,7 +94,7 @@ function icons ()
         minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderSizePixel = 0
-        minimizeButton.Position = UDim2.new(0,584,0,14)
+        minimizeButton.Position = UDim2.new(0,screenSize.X-50,0,14)
 
         local originalSize = UDim2.new(0, 45, 0, 45)
         minimizeButton.Size = originalSize + UDim2.new(0, originalSize.X.Offset * 0.15, 0, originalSize.Y.Offset * 0.15)
@@ -158,6 +168,9 @@ end
             local RoomDungeons = ""
             local RoomDungeons2 = 0
             local stayPlayerInDungeon = 0
+            local DungeonSelect = {}
+            local RankToSellSelect = {}
+            local RankList = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"}
             local VariableIndex = {
                 AutoFarm = false,
                 TweenToMonster = false,
@@ -190,8 +203,8 @@ end
                         task.wait(duration)
                     end
                     
-                    function moveTo(humanoid, targetPoint)
-                        humanoid:MoveTo(targetPoint)
+                    function moveTo(targetPoint)
+                        HumanoidRootPart:MoveTo(targetPoint)
                     end
 
                     local function toClipboard(String)
@@ -209,10 +222,6 @@ end
                         return x
                     end
                 -- ============================= à¸¥à¸³à¸”à¸±à¸šà¸‡à¸²à¸™ =============================
-
-                    local function formatnum(num)
-                        return string.gsub(num, "(%d)(%d%d%d)$", "%1,%2")  -- à¸•à¸±à¸§à¸­à¸¢à¹ˆà¸²à¸‡à¸à¸²à¸£à¹ƒà¸Šà¹‰à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸ªà¹ˆà¸„à¸±à¹ˆà¸™à¸žà¸±à¸™
-                    end
 
                     local function all_trim(s)
                         if s == nil then s = " " end
@@ -271,6 +280,23 @@ end
                     end
 
                     local function Autoquest()
+                        local questx = game:GetService("Players").LocalPlayer.PlayerGui.Hud.Hud.QuestFrame.QuestName.Text
+                        if questx == "Buy Your First Weapon" then
+                            local args = {
+                                {
+                                    {
+                                        Shop = "WeaponShop1",
+                                        Action = "Buy",
+                                        Amount = 1,
+                                        Event = "ItemShopAction",
+                                        Item = "SpikeMace"
+                                    },
+                                    "\f"
+                                }
+                            }
+                            game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                            task.wait(5)
+                        end
                         local quests = game:GetService("Players").LocalPlayer.leaderstats.Quests:GetChildren()
                         for i,quest in pairs(quests) do
                             if quest:IsA("Folder") then
@@ -319,12 +345,82 @@ end
                                     end
                                 end
                             end
-                         end
+                        end
                     end
 
-                    local Main = Tabs.Main:AddSection("Main")
+                    local function autoEquipBestPet()
+                        local v49, v50 = LocalPlayer.leaderstats.Inventory.Pets:GetChildren()
+                        local v47 = GuiFunctions.GetFrame("Pets", "Menus").Main:GetAttribute("Order")
+                        local listAllPet = {}
+                        for _, v in next, v49, v50 do
+                            local v53 = {
+                                ["Name"] = v.Name,
+                                ["Order"] = GuiFunctions.LayoutOrderPets("GetOrder", v47, {
+                                    ["PetFolder"] = v,
+                                    ["PetInfo"] = PetsInfo[v:GetAttribute("Name")],
+                                    ["Equipped"] = false
+                                })
+                            }
+                            table.insert(listAllPet, v53)
+                        end
+                        table.sort(listAllPet, function(p54, p55)
+                            return p54.Order < p55.Order
+                        end)
+                        local GetMaxPets = ExtraFunctions.GetMaxPets(LocalPlayer)
+                        local allpets = {}
+                        for v59 = 1, math.min(GetMaxPets, #listAllPet) do
+                            local v60 = listAllPet[v59].Name
+                            table.insert(allpets, v60)
+                        end
+                        local args = {
+                            {
+                                {
+                                    Event = "EquipBest",
+                                    Pets = allpets
+                                },
+                                "\005"
+                            }
+                        }
+                        game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                    end
+
                 -- ======== Auto Arise =========
-                    local Toggle_quest = Main:AddToggle("autoQuest", {Title = "Auto Quest", Default = false})
+                    Tabs.Main:AddButton({
+                        Title = "Auto Get All Gamepass (Visual)",
+                        Description = "One Click To Get All",
+                        Callback = function()
+                            Window:Dialog({
+                                Title = "Are u Sure ?",
+                                Content = "If Confirm U Get all GamePass.\nBut If U Cancel To Remove all Gamepass",
+                                Buttons = {
+                                    {
+                                        Title = "Confirm",
+                                        Callback = function()
+                                            local passes = LocalPlayer.leaderstats.Passes
+                                            for i,v in pairs(passes:GetAttributes()) do
+                                                if i then
+                                                    passes:SetAttribute(i, true)
+                                                end
+                                            end
+                                        end
+                                    },
+                                    {
+                                        Title = "Cancel",
+                                        Callback = function()
+                                            local passes = LocalPlayer.leaderstats.Passes
+                                            for i,v in pairs(passes:GetAttributes()) do
+                                                if i then
+                                                    passes:SetAttribute(i, false)
+                                                end
+                                            end
+                                        end
+                                    }
+                                }
+                            })
+                        end
+                    })
+                    local autoQuestSection = Tabs.Main:AddSection("Auto Quest")
+                    local Toggle_quest = autoQuestSection:AddToggle("autoQuest", {Title = "Auto Quest", Default = false})
                     Toggle_quest:OnChanged(function()
                         if Toggle_quest.Value then
                             while Toggle_quest.Value and task.wait(0.5) do
@@ -333,7 +429,7 @@ end
                         end
                     end)
 
-                    local Toggle_autoSetSpawn = Main:AddToggle("autoSetSpawn", {Title = "Auto Set Spawn Quest", Default = false})
+                    local Toggle_autoSetSpawn = autoQuestSection:AddToggle("autoSetSpawn", {Title = "Auto Set Spawn Quest", Default = false})
                     Toggle_autoSetSpawn:OnChanged(function()
                         if Toggle_autoSetSpawn.Value then
                             while Toggle_autoSetSpawn.Value and task.wait(1) do
@@ -360,8 +456,8 @@ end
                             end
                         end
                     end)
-
-                    local Toggle_AutoArise = Main:AddToggle("autoarise", {Title = "Auto Arise", Default = false})
+                    local autoAriseDestroySection = Tabs.Main:AddSection("Auto Arise / Destroy")
+                    local Toggle_AutoArise = autoAriseDestroySection:AddToggle("autoarise", {Title = "Auto Arise", Default = false})
                     Toggle_AutoArise:OnChanged(function()
                         if Toggle_AutoArise.Value then
                                 while Toggle_AutoArise.Value do
@@ -414,7 +510,7 @@ end
                         end
                     end)
                     
-                    local toggle_autodestroy = Main:AddToggle("autodestroy", {Title = "Auto Destroy", Default = false})
+                    local toggle_autodestroy = autoAriseDestroySection:AddToggle("autodestroy", {Title = "Auto Destroy", Default = false})
                     toggle_autodestroy:OnChanged(function()
                         if toggle_autodestroy.Value then
                                 while toggle_autodestroy.Value do
@@ -454,7 +550,128 @@ end
                                 end
                         end
                     end)
+                    local autoBestOrSellShadowSection = Tabs.Main:AddSection("Auto Best / Sell Shadow")
+                    local totalpet = 0
+                    local Toggle_autoEquipBest = autoBestOrSellShadowSection:AddToggle("autoEquipBest", {Title = "Auto Equip Best Shadow", Default = false})
+                    Toggle_autoEquipBest:OnChanged(function()
+                        while Toggle_autoEquipBest.Value and task.wait() do
+                            if Toggle_autoEquipBest.Value then
+                                local pets = game:GetService("Players").LocalPlayer.leaderstats.Inventory.Pets
+                                --if #pets:GetChildren() ~= totalpet then
+                                    autoEquipBestPet()
+                                    --totalpet = #pets:GetChildren()
+                                    task.wait(1)
+                                --end
+                            end
+                        end
+                    end)
 
+                    local ListShadowRankDropDown = autoBestOrSellShadowSection:AddDropdown("ListShadowRankDropDown", {
+                        Title = "Select Rank",
+                        Description = "Select Rank Dungeon.",
+                        Values = {1,2,3,4,5,6,7,8,9,10,11},
+                        Multi = true,
+                        Default = {},
+                    })
+
+                    ListShadowRankDropDown:OnChanged(function(Value)
+                        local Values = {}
+                        for Value, State in next, Value do
+                            table.insert(RankToSellSelect, Value)
+                        end
+                    end)
+
+                    local Toggle_autoSellShadow = autoBestOrSellShadowSection:AddToggle("autoSellShadow", {Title = "Auto Sell Shadow", Default = false})
+                    Toggle_autoSellShadow:OnChanged(function()
+                        while Toggle_autoSellShadow.Value and task.wait() do
+                            if Toggle_autoSellShadow.Value then
+                                local pets = game:GetService("Players").LocalPlayer.leaderstats.Inventory.Pets
+                                if #pets:GetChildren() > 1 then
+                                    local Menus = game:GetService("Players").LocalPlayer.PlayerGui.Menus
+                                    if Menus:FindFirstChild("Pets") == nil then
+                                        Menus = game:GetService("Players").LocalPlayer.PlayerGui.__Disable.Menus
+                                    end
+                                    print(Menus:FindFirstChild("Pets"))
+                                    if Menus:FindFirstChild("Pets") then
+                                        print("Sell Pets")
+                                        if Menus.Pets:FindFirstChild("Main") then
+                                            print("Sell Main")
+                                            local petsContainer = Menus.Pets.Main.Container
+                                            for _, pet in ipairs(petsContainer:GetChildren()) do
+                                                if pet:IsA("ImageButton") and pet.Name ~= "Template" then
+                                                    local petName = pet.Name
+                                                    if pet:FindFirstChild("Main") then
+                                                        local equipped = pet.Main.Equipped
+                                                        if not equipped.Visible then
+                                                            if table.find(RankToSellSelect, pet.Main.Rank.Text) then
+                                                                local args = {
+                                                                    {
+                                                                        {
+                                                                            Event = "SellPet",
+                                                                            Pets = {
+                                                                                pet.Name
+                                                                            }
+                                                                        },
+                                                                        "\005"
+                                                                    }
+                                                                }
+                                                                game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))                                                                
+                                                            end
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end)
+
+                    local autoMaxStatsSection = Tabs.Main:AddSection("Auto Max Stats if Lower 100")
+                    local Toggle_autoMaxStats = autoMaxStatsSection:AddToggle("autoMaxStats", {Title = "Auto Max Stats", Default = false})
+                    Toggle_autoMaxStats:OnChanged(function()
+                        while Toggle_autoMaxStats.Value and task.wait() do
+                            if Toggle_autoMaxStats.Value then
+                                local PlayerStats = LocalPlayer.leaderstats.PlayerStats
+                                for i,v in pairs(PlayerStats:GetAttributes()) do
+                                    if v < 100 then
+                                        PlayerStats:SetAttribute(i, 215)
+                                    end
+                                end
+                            end
+                        end
+                    end)
+
+                    local Toggle_autoMaxShadowStats = autoMaxStatsSection:AddToggle("autoMaxShadowStats", {Title = "Auto Max Shadow Stats", Default = false})
+                    Toggle_autoMaxShadowStats:OnChanged(function()
+                        while Toggle_autoMaxShadowStats.Value and task.wait() do
+                            if Toggle_autoMaxShadowStats.Value then
+                                local Pets = LocalPlayer.leaderstats.Equips.Pets
+                                local listPet = {}
+                                for i,v in pairs(Pets:GetAttributes()) do
+                                    if v then
+                                        table.insert(listPet, v)
+                                    end
+                                end
+                                if #listPet > 1 then
+                                    for _,pet in pairs(LocalPlayer.leaderstats.Inventory.Pets:GetChildren()) do
+                                        if pet:IsA("Folder") then
+                                            if table.find(listPet, pet.Name) then
+                                                if pet:FindFirstChild("Stats") then
+                                                    for i,_ in pairs(pet.Stats:GetAttributes()) do
+                                                        if i then
+                                                            pet.Stats:SetAttribute(i, 10)
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end)
                 -- ======== Auto Arise =========
 
                 -- ======== Auto Farm =======
@@ -645,13 +862,10 @@ end
                                 while autohit.Value do
                                     local closestEnemy = nil
                                     local closestDistance = math.huge 
-                                    local player = game.Players.LocalPlayer
-                                    local playerCharacter = player.Character or player.CharacterAdded:Wait()
-                                    local playerPosition = playerCharacter:WaitForChild("HumanoidRootPart").Position
                                     for _, enemy in ipairs(workspace.__Main.__Enemies.Client:GetChildren()) do
                                         if enemy:IsA("Model") and enemy:FindFirstChild("HumanoidRootPart") then
                                             local enemyPosition = enemy:FindFirstChild("HumanoidRootPart").Position
-                                            local distance = (playerPosition - enemyPosition).magnitude
+                                            local distance = (humanoidRootPart.Position - enemyPosition).magnitude
                                             if distance < closestDistance then
                                                 closestEnemy = enemy
                                                 closestDistance = distance
@@ -710,8 +924,8 @@ end
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
+                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                     if RoomDungeons ~= NameRoom.Name and  playerinposition > 5 and string.find(StatusDg, "Dungeon Ends", 1) == nil then
-                                                                        RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom.Name
                                                                         player:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
@@ -734,7 +948,7 @@ end
                                                                         RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
                                                                         RoomDungeons = NameRoom2.Name
                                                                         LocalPlayer:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                        LocalCharacter:PivotTo(RoomDungeon.CFrame)
+                                                                        LocalCharacter:PivotTo(CFrame.new(RoomDungeon.Position))
                                                                         LocalCharacter:SetAttribute("InTp", false)
                                                                         playerinposition = 0
                                                                     end
@@ -791,13 +1005,10 @@ end
                         end
                     end)
 
-                    local DungeonSelect = {}
-                    local DungeonList = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"}
-
                     local Dungeon1 = DungeonSectiom:AddDropdown("MultiDropdown", {
                         Title = "Select Rank",
                         Description = "Select Rank Dungeon.",
-                        Values = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"},
+                        Values = RankList,
                         Multi = true,
                         Default = {},
                     })
@@ -850,7 +1061,6 @@ end
                                 if DungeonSelect ~= nil then
                                     local defaultDungeon = workspace:FindFirstChild("__Main"):FindFirstChild("__Dungeon")
                                     if defaultDungeon:FindFirstChild("Dungeon") then
-                                        print(table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")))
                                         if table.find(DungeonSelect, defaultDungeon:FindFirstChild("Dungeon"):GetAttribute("DungeonRank")) ~= nil and game.PlaceId ~= 128336380114944 then
                                             local args = {
                                                 {
@@ -1217,7 +1427,7 @@ end
                 Tools_Addon:AddButton({
                     Title = "Copy Position",
                     Callback = function()
-                        toClipboard(tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position))
+                        toClipboard(tostring(humanoidRootPart.Position))
                     end
                 })
                 Tools_Addon:AddButton({
