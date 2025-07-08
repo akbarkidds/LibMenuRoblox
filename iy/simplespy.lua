@@ -562,7 +562,7 @@ end
 
                     local ListShadowRankDropDown = autoBestOrSellShadowSection:AddDropdown("ListShadowRankDropDown", {
                         Title = "Select Rank",
-                        Description = "Select Rank Dungeon.",
+                        Description = "Select Rank Shadow.",
                         Values = RankList,
                         Multi = true,
                         Default = {},
