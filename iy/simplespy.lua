@@ -54,7 +54,7 @@ local mapName = {
     ["Hurricane World"] = "SlimeWorld",
     ["Hurricane Island"] = "SlimeWorld",
 }
-local screenSize = Workspace.CurrentCamera.ViewportSize.Y
+
 if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then 
 --<>----<>----<>----< Main Script >----<>----<>----<>--
     print("[Akbar Hub | "..GameName.."]")
@@ -63,18 +63,12 @@ if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.Pla
     local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/InterfaceManager.lua"))()
     local MenuHight = 0
     local MenuWidth = 0
-    if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
-        MenuHight = 350
-        MenuWidth = 600
-    else
-        MenuHight = 450
-        MenuWidth = 700
-    end
+
     local Window = Fluent:CreateWindow({
         Title = "Akbar Hub | "..GameName,
         SubTitle = "v1.6",
         TabWidth = 150,
-        Size = UDim2.fromOffset(MenuWidth, MenuHight),
+        Size = UDim2.fromOffset(500, 300),
         Acrylic = false,
         Theme = "Darker",
         MinimizeKey = Enum.KeyCode.LeftControl
@@ -94,7 +88,7 @@ function icons ()
         minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderSizePixel = 0
-        minimizeButton.Position = UDim2.new(0,screenSize.X-50,0,14)
+        minimizeButton.Position = UDim2.new(0,584,0,14)
 
         local originalSize = UDim2.new(0, 45, 0, 45)
         minimizeButton.Size = originalSize + UDim2.new(0, originalSize.X.Offset * 0.15, 0, originalSize.Y.Offset * 0.15)
