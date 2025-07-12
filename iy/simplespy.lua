@@ -430,7 +430,8 @@ end
 
                 -- ======== Auto Arise =========
                     local Dropdown_tptarget = Tabs.Main:AddDropdown("Dropdown_tptarget", {
-                        Title = "Shadow Attack Mode If Auto Farm Not Work",
+                        Title = "Shadow Attack Mode",
+                        Description = "If Auto Farm Not Work.",
                         Values = {1,2,3},
                         Multi = false,
                         Default = 1,
