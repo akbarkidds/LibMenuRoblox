@@ -2,7 +2,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-local player = game.Players.LocalPlayer
+local getgenv: () -> ({[string]: any}) = getfenv().getgenv
 -- // // // Services // // // --
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -20,11 +20,14 @@ local GuiFunctions = require(game:GetService("ReplicatedStorage").SharedModules.
 local ExtraFunctions = require(game:GetService("ReplicatedStorage").SharedModules.ExtraFunctions)
 local PetsInfo = require(game:GetService("ReplicatedStorage").Indexer.PetsInfo)
 
+
+local queue_on_teleport: (Code: string) -> () = getfenv().queue_on_teleport
+
 -- // // // Locals // // // --
 local LocalPlayer = Players.LocalPlayer
 local LocalCharacter = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local HumanoidRootPart = LocalCharacter:FindFirstChild("HumanoidRootPart")
-local character = player.Character or player.CharacterAdded:Wait()
+local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local plr = game.Players.LocalPlayer
@@ -55,7 +58,14 @@ local mapName = {
     ["Hurricane Island"] = "SlimeWorld",
 }
 
-if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then 
+local Pets = workspace:WaitForChild("__Main"):WaitForChild("__Pets")
+local Mobs = workspace:WaitForChild("__Main"):WaitForChild("__Enemies")
+local Worlds = workspace:WaitForChild("__Main"):WaitForChild("__World")
+local Spawns = workspace:WaitForChild("__Extra"):WaitForChild("__Spawns")
+local Dungeon = workspace:WaitForChild("__Main"):WaitForChild("__Dungeon")
+
+
+if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then
 --<>----<>----<>----< Main Script >----<>----<>----<>--
     print("[Akbar Hub | "..GameName.."]")
     local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/Fisch/refs/heads/main/Gui/Fluent.lua"))()
@@ -164,6 +174,9 @@ end
             local stayPlayerInDungeon = 0
             local DungeonSelect = {}
             local RankToSellSelect = {}
+            local Islands = {}
+            local IslandKeys = {}
+            local LastFloorTower = nil
             local RankList = {"E", "D", "C", "B", "A", "S", "SS", "N", "G", "M"}
             local VariableIndex = {
                 AutoFarm = false,
@@ -173,7 +186,41 @@ end
                 AntiAFKs = true,
                 AutoExecute = false,
             }
-            
+            LocalPlayer.Settings:SetAttribute("UnitySends", false)
+            LocalPlayer.OnTeleport:Connect(function()
+                if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then
+                    queue_on_teleport([[
+                  task.spawn(function()
+                    task.wait(5)
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()
+                  end)
+                ]])
+                end
+            end)
+
+            -- AntiCheat
+
+            task.spawn(function()
+                while true and task.wait(.1) do
+                    if LocalPlayer and LocalCharacter then
+                        local CharacterScripts = LocalCharacter:FindFirstChild("CharacterScripts")
+                        if CharacterScripts then
+                        for _, Child in ipairs(CharacterScripts:GetChildren()) do
+                            Child:Destroy()
+                        end
+                        end
+                    end
+                end
+            end)
+
+            for key, _ in pairs(Islands) do
+                table.insert(IslandKeys, key)
+            end
+
+            for _, Island in pairs(Spawns:GetChildren()) do
+                Islands[Island.Name] = Island.CFrame
+            end
+
             -- ==================================== Start Function Group ============================
                 -- ===================================== Function =====================================
 
@@ -772,6 +819,25 @@ end
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
                     end
 
+                    local function GetAnyMob()
+                        local ServerFolder = Mobs:FindFirstChild("Server")
+                    
+                        for _, SubFolder in ipairs(ServerFolder:GetChildren()) do
+                            if not SubFolder:IsA("Folder") and not SubFolder:GetAttribute("Dead") then
+                                return SubFolder
+                            end
+                            
+                            if SubFolder:IsA("Folder") and #SubFolder:GetChildren() > 0 then
+                                for _, Mob in ipairs(SubFolder:GetChildren()) do
+                                    if Mob:IsA("Instance") and not Mob:GetAttribute("Dead") then
+                                        return Mob
+                                    end
+                                end
+                            end
+                        end
+                    
+                        return nil
+                    end
                     
                     spawn(function()
                         while true and task.wait(0.1) do
@@ -903,25 +969,26 @@ end
                                             local infoRoom = hudRoom.Room.Text:split("/") or {}
                                             if #infoRoom > 1 then
                                                 local infoRoomValue = tonumber(infoRoom[1]:match("[%d%.]+")) or 0
+                                                local infoRoomValue2 = tonumber(infoRoom[2]:match("[%d%.]+")) or 0
                                                 local StatusDg = hudRoom.DungeonInfo.TextLabel.Text
-                                                if infoRoomValue ~= nil then
+                                                if infoRoomValue ~= nil and infoRoomValue2 ~= nil then
                                                     local newLoc = CFrame.new(449.8890686035156, 4383.7646484375, -1883.1036376953125)
                                                     local distanceNewLoc = (newLoc.Position - playerPosition).Magnitude
-                                                    if infoRoomValue > 1 and infoRoomValue == 500 and distanceNewLoc > 3 then
+                                                    if infoRoomValue > 1 and infoRoomValue2 == 500 and distanceNewLoc > 3 then
                                                         Tween(newLoc, 500)
                                                         summerInf = true
                                                     end
                                                     if infoRoomValue > 1  and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Room: "..infoRoomValue and not summerInf then
-                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and infoRoomValue2 < 500 then
                                                                 local NameRoom = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
                                                                 if NameRoom:FindFirstChild("Entrace") then
                                                                     local RoomDungeon = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue):FindFirstChild("Entrace")
                                                                     playerinposition = playerinposition + 1
-                                                                    RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
+                                                                    RoomDungeons2 = "Room_"..infoRoomValue2
                                                                     if RoomDungeons ~= NameRoom.Name and  playerinposition > 5 and string.find(StatusDg, "Dungeon Ends", 1) == nil then
                                                                         RoomDungeons = NameRoom.Name
-                                                                        player:RequestStreamAroundAsync(RoomDungeon.Position)
+                                                                        LocalPlayer:RequestStreamAroundAsync(RoomDungeon.Position)
                                                                         Tween(RoomDungeon, 500)
                                                                         task.wait(1)
                                                                         playerinposition = 0
@@ -932,19 +999,34 @@ end
                                                     end
                                                     if infoRoomValue > 1 and not summerInf then
                                                         if all_trim(infoRoom[1]) == "Floor: "..infoRoomValue and not summerInf then
-                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and tonumber(infoRoom[2]:match("[%d%.]+")) < 500 then
-                                                                local NameRoom2 = workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue)
-                                                                if NameRoom2:FindFirstChild("Portal") then
-                                                                    local RoomDungeon = NameRoom2.Portal
-                                                                    playerinposition = playerinposition + 1
-                                                                    if RoomDungeons ~= NameRoom2.Name and playerinposition > 5 and string.find(StatusDg, "Dungeon Ends", 1) == nil then
-                                                                        LocalCharacter:SetAttribute("InTp", true)
-                                                                        RoomDungeons2 = "Room_"..tonumber(infoRoom[2]:match("[%d%.]+"))
-                                                                        RoomDungeons = NameRoom2.Name
-                                                                        LocalPlayer:RequestStreamAroundAsync(RoomDungeon.Position)
-                                                                        LocalCharacter:PivotTo(CFrame.new(RoomDungeon.Position))
-                                                                        LocalCharacter:SetAttribute("InTp", false)
-                                                                        playerinposition = 0
+                                                            if workspace.__Main.__World:FindFirstChild("Room_"..infoRoomValue) and infoRoomValue2 < 500 then
+                                                                local Worlds = workspace:FindFirstChild("__Main"):FindFirstChild("__World")
+                                                                local UpContainer = PlayerGui.Hud:FindFirstChild("UpContanier")
+                                                                local RoomText = UpContainer and UpContainer:FindFirstChild("Room")
+                                                                if Worlds and RoomText and RoomText:IsA("TextLabel") then
+                                                                    local UpText = RoomText.Text
+                                                                    local CurrentFloor = tonumber(UpText:match("Floor: (%d+)/%d+"))
+                                                                    if CurrentFloor then
+                                                                        if LastFloorTower ~= CurrentFloor then
+                                                                            LastFloorTower = CurrentFloor
+                                                                        local TargetFloor = CurrentFloor + 1
+
+                                                                        local TargetWorld
+                                                                        repeat
+                                                                            task.wait(.1)
+                                                                            TargetWorld = Worlds:FindFirstChild("Room_" .. TargetFloor)
+                                                                        until TargetWorld
+
+                                                                        local PlayersSpawns
+                                                                        repeat
+                                                                            task.wait(.1)
+                                                                            PlayersSpawns = TargetWorld:FindFirstChild("PlayersSpawns")
+                                                                        until PlayersSpawns
+
+                                                                        task.wait(.1)
+                                                                        LocalCharacter:PivotTo(PlayersSpawns:GetPivot())
+                                                                        notif("Teleporting to Floor " .. TargetFloor, 1)
+                                                                        end
                                                                     end
                                                                 end
                                                             end
@@ -967,9 +1049,8 @@ end
                                                     end
                                                 end
                                             end
-                                            
                                             if closestEnemy then
-                                                player:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
+                                                LocalPlayer:RequestStreamAroundAsync(closestEnemy.HumanoidRootPart.Position)
                                                 closestEnemy.ModelStreamingMode = Enum.ModelStreamingMode.Persistent
                                                 task.wait()
                                                 local distancex = (closestEnemy.HumanoidRootPart.Position - playerPosition).Magnitude
@@ -1257,40 +1338,27 @@ end
                     end)
 
                     -- ======== Teleport =======
-
-                    local locations = {
-                        ["Leveling City"] = Vector3.new(156.59788513183594, 28.27948570251465, -342.618408203125), -- Leveling City
-                        ["Grass Village"] = Vector3.new(-3516.568603515625, 59.03760528564453, 2479.522216796875), -- Grass Village
-                        ["Brum Island"] = Vector3.new(-3006.69140625, 64.56521606445312, -2253.248291015625), -- Brum Island
-                        ["Faceheal Town"] = Vector3.new(2949.715087890625, 50.4575309753418, -2656.518798828125), -- Faceheal Town
-                        ["Mont1"] = Vector3.new(-6170.7802734375, 77.83106994628906, 5438.39013671875),
-                        ["Mont2"] = Vector3.new(466.29296875, 117.56482696533203, 3452.061279296875),
-                        ["Mont3"] = Vector3.new(3302.868896484375, 83.15568542480469, 28.682985305786133),
-                        ["Mont4"] = Vector3.new(4327.86669921875, 118.99542999267578, -4818.9599609375),
-                        ["Mont5"] = Vector3.new(-621.42041015625, 107.75682830810547, -3568.83251953125),
-                        ["Mont6"] = Vector3.new(-5418.4736328125, 107.44157409667969, -5521.29638671875),
-                        ["Mont7"] = Vector3.new(-5881.2021484375, 81.40789031982422, 387.6292724609375)
-                    }
-
-                    local Teleport_Target = "Leveling City"
+                    local function TeleportToIsland(IslandName)
+                        if IslandName and Islands[IslandName] then
+                            task.wait(.1)
+                            LocalCharacter:PivotTo(Islands[IslandName])
+                        end
+                    end
+                    local Teleport_Target = ""
                     local Dropdown_tptarget = Tabs.Teleport:AddDropdown("Dropdown_tptarget", {
                         Title = "Select Teleport Target",
-                        Values = {"Leveling City", "Grass Village", "Brum Island" , "Faceheal Town" , "Mont1", "Mont2", "Mont3", "Mont4", "Mont5", "Mont6", "Mont7"},
+                        Values = IslandKeys,
                         Multi = false,
-                        Default = "Leveling City",
+                        Default = nil,
                     })
-                    Dropdown_tptarget:SetValue("Leveling City")
+
                     Dropdown_tptarget:OnChanged(function(Value)
                         Teleport_Target = Value
                     end)
                     Tabs.Teleport:AddButton({
                         Title = "Teleport to Target",
                         Callback = function()
-                            if locations[Teleport_Target] then
-                                tweenFlyTo(locations[Teleport_Target], 500)
-                            else
-                                print("âŒ Invalid Teleport Target:", Teleport_Target)
-                            end
+                            TeleportToIsland(Teleport_Target)
                         end
                     })
                 -- ======== Teleport =======
