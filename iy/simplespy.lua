@@ -165,6 +165,7 @@ end
     -- ============================================= Other Code =====================================
         do -- no delete
             -- ======== Configuration Variables ========
+            local FixError = ""
             local isAttacking = false
             local enemytargetReal
             local playerposisi
@@ -213,12 +214,12 @@ end
                 end
             end)
 
-            for key, _ in pairs(Islands) do
-                table.insert(IslandKeys, key)
-            end
-
             for _, Island in pairs(Spawns:GetChildren()) do
                 Islands[Island.Name] = Island.CFrame
+            end
+
+            for key, _ in pairs(Islands) do
+                table.insert(IslandKeys, key)
             end
 
             -- ==================================== Start Function Group ============================
@@ -392,6 +393,7 @@ end
                     local function autoEquipBestPet()
                         local v49, v50 = LocalPlayer.leaderstats.Inventory.Pets:GetChildren()
                         local v47 = GuiFunctions.GetFrame("Pets", "Menus").Main:GetAttribute("Order")
+                        local EquipPet = game:GetService("Players").LocalPlayer.leaderstats.Equips.Pets:GetAttributes()
                         local listAllPet = {}
                         for _, v in next, v49, v50 do
                             local v53 = {
@@ -413,19 +415,40 @@ end
                             local v60 = listAllPet[v59].Name
                             table.insert(allpets, v60)
                         end
+                        if #EquipPet then
+                            EquipPet
+                        end
                         local args = {
                             {
                                 {
                                     Event = "EquipBest",
                                     Pets = allpets
                                 },
-                                "\005"
+                                FixError
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
                     end
 
                 -- ======== Auto Arise =========
+                    local Dropdown_tptarget = Tabs.Main:AddDropdown("Dropdown_tptarget", {
+                        Title = "Shadow Attack Mode If Auto Farm Not Work",
+                        Values = {1,2,3},
+                        Multi = false,
+                        Default = 1,
+                    })
+
+                    Dropdown_tptarget:OnChanged(function(Value)
+                        if Value == 1 then
+                            FixError = "\b"
+                        end
+                        if Value == 2 then
+                            FixError = "\005"
+                        end
+                        if Value == 3 then
+                            FixError = "\008"
+                        end
+                    end)
                     Tabs.Main:AddButton({
                         Title = "Auto Get All Gamepass (Visual)",
                         Description = "One Click To Get All",
@@ -653,7 +676,7 @@ end
                                                                                 pet.Name
                                                                             }
                                                                         },
-                                                                        "\005"
+                                                                        FixError
                                                                     }
                                                                 }
                                                                 game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))                                                                
@@ -757,7 +780,6 @@ end
 
                         for _, monster in pairs(enemiesFolder:GetChildren()) do
                             if monster:IsA("Model") then
-                                if isValidEnemy(monster) then
                                     local monsterRoot = monster:FindFirstChild("HumanoidRootPart")
                                     local healthBar = monster:FindFirstChild("HealthBar")
                                     local monsterName = "Unknown"
@@ -795,7 +817,6 @@ end
                                             }
                                         end
                                     end
-                                end
                             end
                         end
                         return closestMonsterData
@@ -813,7 +834,7 @@ end
                                     Event = "Attack",
                                     Enemy = closestMonsterID
                                 },
-                                "\005"
+                                FixError
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
@@ -841,19 +862,6 @@ end
                     
                     spawn(function()
                         while true and task.wait(0.1) do
-                            local proximiStuck = game:GetService("Players").LocalPlayer.PlayerGui
-                            if proximiStuck:FindFirstChild("ProximityPrompts") then
-                                proximiStuck = proximiStuck.ProximityPrompts:GetChildren()
-                                if #proximiStuck then
-                                    for i, proxi in pairs(proximiStuck) do
-                                        if proxi then
-                                            if proxi.Name == "Arise" or proxi.Name == "Destroy" then
-                                                proxi:Destroy()
-                                            end
-                                        end
-                                    end
-                                end
-                            end
                             if not VariableIndex.AutoFarm then
                                 if isAttacking then
                                     isAttacking = false
@@ -1590,6 +1598,27 @@ end
                         end
                     end
                     task.wait(1)
+                end
+            end
+        end
+        local hitung = 0
+        while true and task.wait(1) do
+            local proximiStuck = game:GetService("Players").LocalPlayer.PlayerGui
+            if proximiStuck:FindFirstChild("ProximityPrompts") then
+                proximiStuck = proximiStuck.ProximityPrompts:GetChildren()
+                if #proximiStuck then
+                    for i, proxi in pairs(proximiStuck) do
+                        if proxi then
+                            if proxi.Name == "Arise" or proxi.Name == "Destroy" then
+                                hitung = hitung + 1
+                                if hitung > 10 then
+                                    proxi:Destroy()
+                                end
+                            end
+                        end
+                    end
+                else
+                    hitung = 0
                 end
             end
         end
