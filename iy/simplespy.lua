@@ -415,9 +415,6 @@ end
                             local v60 = listAllPet[v59].Name
                             table.insert(allpets, v60)
                         end
-                        if #EquipPet then
-                            EquipPet
-                        end
                         local args = {
                             {
                                 {
@@ -428,6 +425,7 @@ end
                             }
                         }
                         game:GetService("ReplicatedStorage"):WaitForChild("BridgeNet2"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                        task.wait(3)
                     end
 
                 -- ======== Auto Arise =========
