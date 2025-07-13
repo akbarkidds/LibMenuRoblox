@@ -1373,7 +1373,7 @@ end
                     VariableIndex.AntiAFKs = Value
                 end)
 
-                local ToggleautoExecute = Tools_Option:AddToggle("autoExecute", {Title = "Auto Execute", Default = true })
+                local ToggleautoExecute = Tools_Option:AddToggle("autoExecute", {Title = "Auto Execute", Default = false })
                 ToggleautoExecute:OnChanged(function(Value)
                     autoExecute = Value
                 end)
