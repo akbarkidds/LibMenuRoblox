@@ -89,6 +89,14 @@ if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.Pla
         Theme = "Darker",
         MinimizeKey = Enum.KeyCode.LeftControl
     })
+    
+local TeleportCheck = false
+LocalPlayer.OnTeleport:Connect(function(State)
+    if autoExecute and (not TeleportCheck) and queueteleport then
+        TeleportCheck = true
+        queueteleport('(loadstring or load)(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()')
+    end
+end)
 
 function icons ()
     -- ===================== icon ===================== --
@@ -1543,13 +1551,6 @@ end
             end
         end
     -- ============================================= Other Code End =================================
-    local TeleportCheck = false
-    LocalPlayer.OnTeleport:Connect(function(State)
-        if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 and autoExecute and (not TeleportCheck) and queueteleport then
-            TeleportCheck = true
-            queueteleport('(loadstring or load)(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()')
-        end
-    end)
 
     SaveManager:SetLibrary(Fluent)
     InterfaceManager:SetLibrary(Fluent)
