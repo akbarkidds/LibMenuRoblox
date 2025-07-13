@@ -22,6 +22,11 @@ local PetsInfo = require(game:GetService("ReplicatedStorage").Indexer.PetsInfo)
 
 
 local queue_on_teleport: (Code: string) -> () = getfenv().queue_on_teleport
+function missing(t, f, fallback)
+    if type(f) == t then return f end
+    return fallback
+end
+queueteleport =  missing("function", queue_on_teleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport))
 
 -- // // // Locals // // // --
 local LocalPlayer = Players.LocalPlayer
@@ -34,6 +39,7 @@ local plr = game.Players.LocalPlayer
 local char = plr.Character or plr.CharacterAdded:Wait()
 local distanceEnemys = 1100
 local loadIcon = false
+local autoExecute = false
 local mapName = {
     ["Leveling City"] = "SoloWorld",
     ["Grass Village"] = "NarutoWorld",
@@ -188,16 +194,6 @@ end
                 AutoExecute = false,
             }
             LocalPlayer.Settings:SetAttribute("UnitySends", false)
-            LocalPlayer.OnTeleport:Connect(function()
-                if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 then
-                    queue_on_teleport([[
-                  task.spawn(function()
-                    task.wait(5)
-                    loadstring(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()
-                  end)
-                ]])
-                end
-            end)
 
             -- AntiCheat
 
@@ -1377,6 +1373,11 @@ end
                     VariableIndex.AntiAFKs = Value
                 end)
 
+                local ToggleautoExecute = Tools_Option:AddToggle("autoExecute", {Title = "Auto Execute", Default = true })
+                ToggleautoExecute:OnChanged(function(Value)
+                    autoExecute = Value
+                end)
+
                 local ToggleWhiteScreen = Tools_Option:AddToggle("WhiteScreen", {Title = "White Screen", Default = false })
                 ToggleWhiteScreen:OnChanged(function(Value)
                     if Value then
@@ -1542,6 +1543,13 @@ end
             end
         end
     -- ============================================= Other Code End =================================
+    local TeleportCheck = false
+    LocalPlayer.OnTeleport:Connect(function(State)
+        if game.PlaceId == 87039211657390 or game.PlaceId == 128336380114944 or game.PlaceId == 75812907038499 and autoExecute and (not TeleportCheck) and queueteleport then
+            TeleportCheck = true
+            queueteleport('(loadstring or load)(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()')
+        end
+    end)
 
     SaveManager:SetLibrary(Fluent)
     InterfaceManager:SetLibrary(Fluent)
