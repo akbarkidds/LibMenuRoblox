@@ -105,7 +105,7 @@ function icons ()
         minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
         minimizeButton.BorderSizePixel = 0
-        minimizeButton.Position = UDim2.new(0,584,0,14)
+        minimizeButton.Position = UDim2.new(0, workspace.CurrentCamera.ViewportSize.X * (94/100) ,0,14)
 
         local originalSize = UDim2.new(0, 45, 0, 45)
         minimizeButton.Size = originalSize + UDim2.new(0, originalSize.X.Offset * 0.15, 0, originalSize.Y.Offset * 0.15)
@@ -208,7 +208,7 @@ end
                 end
             end)
             -- AntiCheat
-
+            local changeMenu = false
             task.spawn(function()
                 while true and task.wait(.1) do
                     if LocalPlayer and LocalCharacter then
@@ -219,6 +219,17 @@ end
                         end
                         end
                     end
+                    if not changeMenu then
+                        for _, v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
+                            if v and v.size == UDim2.new(0, 500, 0, 300) then
+                                v.Position = UDim2.new(v.Position.X, 0)
+                                task.wait()
+                                if v.Position.Y == 0 then
+                                    changeMenu = true
+                                end
+                            end
+                        end
+                    end 
                 end
             end)
 
@@ -1434,7 +1445,7 @@ end
                         end
                     end)
 
-                    local RankUpSectiom = Tabs.Dungeon:AddSection("Rank Up")
+                    local RankUpSectiom = Tabs.Dungeon:AddSection("Rank Up")    
                     local Toggle_AutoRankTest = RankUpSectiom:AddToggle("Toggle_AutoRankTest", { Title = "Auto Up Rank", Default = false })
                     Toggle_AutoRankTest:OnChanged(function()
                         local rankUp = false
