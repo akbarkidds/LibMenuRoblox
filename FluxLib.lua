@@ -198,6 +198,7 @@ end
             LocalPlayer.OnTeleport:Connect(function(State)
                 if (not TeleportCheck) then
                     TeleportCheck = true
+                    task.wait(3)
                     queueteleport('(loadstring or load)(game:HttpGet("https://raw.githubusercontent.com/akbarkidds/LibMenuRoblox/refs/heads/main/iy/simplespy.lua"))()')
                 end
             end)
