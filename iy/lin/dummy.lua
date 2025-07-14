@@ -4433,9 +4433,9 @@ function Library:Window(p)
 					Size = UDim2.new(1, 0, 1, 0),
 					Position = UDim2.new(0, 0, 0, 0)
 				}}):Play()
-				Minisize_1.Image = "rbxassetid://126134303623984"
+				Minisize_1.Image = "rbxassetid://13857981896"
 			else
-				Minisize_1.Image = "rbxassetid://126134303623984"
+				Minisize_1.Image = "rbxassetid://13857987062"
 				tw({v = Shadow_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {
 					Size = originalSize,
 					Position = originalPosition
@@ -4634,7 +4634,7 @@ function Library:Window(p)
 			local BackgroundCloseUI_1 = Instance.new("Frame")
 			local UICornerCloseUI_1 = Instance.new("UICorner")
 			local FrameCloseUI_1 = Instance.new("Frame")
-			local Title_1 = Instance.new("TextLabel")
+			local Title_1 = Instance.new("ImageLabel")
 
 			CloseUIShadow.Name = "CloseUIShadow"
 			CloseUIShadow.Parent = ScreenGui
@@ -4684,20 +4684,19 @@ function Library:Window(p)
 			FrameCloseUI_1.Position = UDim2.new(0, 0,1, 0)
 			FrameCloseUI_1.Size = UDim2.new(1, 0,0, 4)
 
-			Title_1.Name = "Title"
-			Title_1.Parent = BackgroundCloseUI_1
-			Title_1.AutomaticSize = Enum.AutomaticSize.Y
-			Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-			Title_1.BackgroundTransparency = 1
-			Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
-			Title_1.BorderSizePixel = 0
-			Title_1.Size = UDim2.new(1, 0,1, 0)
-			Title_1.Font = Enum.Font.GothamBold
-			Title_1.Text = CloseUI.Text
-			Title_1.TextColor3 = Color3.fromRGB(255,255,255)
-			Title_1.TextSize = 12
+            Title_1.Name = "MiniMizeUi"
+            Title_1.Parent = BackgroundCloseUI_1
+            Title_1.AutomaticSize = Enum.AutomaticSize.Y
+            Title_1.AnchorPoint = Vector2.new(0.5, 0.5)
+            Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+            Title_1.BackgroundTransparency = 1
+            Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
+            Title_1.BorderSizePixel = 0
+            Title_1.Size = UDim2.new(1, 0,1, 0)
+            Title_1.Image = CloseUI.Image
+            Title_1.ImageTransparency = 1
 
-			addToTheme('Text & Icon', Title_1)
+			addToTheme('Image & Icon', Title_1)
 
 			CloseUIShadow.Size = UDim2.new(0, Title_1.TextBounds.X + 40,0, 40)
 
