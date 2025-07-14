@@ -4628,90 +4628,68 @@ function Library:Window(p)
 		end)
 
 		do
-			local CloseUI = p.CloseUIButton
-			local CloseUIShadow = Instance.new("ImageLabel")
-			local UIPaddingCloseUI_1 = Instance.new("UIPadding")
-			local BackgroundCloseUI_1 = Instance.new("Frame")
-			local UICornerCloseUI_1 = Instance.new("UICorner")
-			local FrameCloseUI_1 = Instance.new("Frame")
-			local ImageLabelIconMinimize = Instance.new("ImageLabel")
+            -- ===================== icon ===================== --
+            local screenGui = Instance.new("ScreenGui")
+            local minimizeButton = Instance.new("ImageButton")
+            local buttonCorner = Instance.new("UICorner")
 
-			CloseUIShadow.Name = "CloseUIShadow"
-			CloseUIShadow.Parent = ScreenGui
-			CloseUIShadow.BackgroundColor3 = Color3.fromRGB(163,162,165)
-			CloseUIShadow.BackgroundTransparency = 1
-			CloseUIShadow.Position = UDim2.new(0, 0,0.200000003, 0)
-			CloseUIShadow.Size = UDim2.new(0, 70,0, 40)
-			CloseUIShadow.Image = "rbxassetid://1316045217"
-			CloseUIShadow.ImageColor3 = Color3.fromRGB(24,24,31)
-			CloseUIShadow.ImageTransparency = 0.5
-			CloseUIShadow.ScaleType = Enum.ScaleType.Slice
-			CloseUIShadow.SliceCenter = Rect.new(10, 10, 118, 118)
-			CloseUIShadow.Visible = CloseUI.Enabled
+            screenGui.Name = "MobileMinimize"
+            screenGui.Parent = game:GetService("CoreGui")
+            screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-			addToTheme('Shadow', CloseUIShadow)
+            minimizeButton.Parent = screenGui
+            minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
+            minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
+            minimizeButton.BorderSizePixel = 0
+            minimizeButton.Position = UDim2.new(0, workspace.CurrentCamera.ViewportSize.X * (94/100) ,0,14)
 
-			UIPaddingCloseUI_1.Name = "UIPaddingCloseUI"
-			UIPaddingCloseUI_1.Parent = CloseUIShadow
-			UIPaddingCloseUI_1.PaddingBottom = UDim.new(0,5)
-			UIPaddingCloseUI_1.PaddingLeft = UDim.new(0,5)
-			UIPaddingCloseUI_1.PaddingRight = UDim.new(0,5)
-			UIPaddingCloseUI_1.PaddingTop = UDim.new(0,5)
+            local originalSize = UDim2.new(0, 45, 0, 45)
+            minimizeButton.Size = originalSize + UDim2.new(0, originalSize.X.Offset * 0.15, 0, originalSize.Y.Offset * 0.15)
+            minimizeButton.Image = "rbxassetid://97909023934615"
 
-			BackgroundCloseUI_1.Name = "BackgroundCloseUI"
-			BackgroundCloseUI_1.Parent = CloseUIShadow
-			BackgroundCloseUI_1.AnchorPoint = Vector2.new(0.5, 0.5)
-			BackgroundCloseUI_1.BackgroundColor3 = Color3.fromRGB(29,28,38)
-			BackgroundCloseUI_1.BorderColor3 = Color3.fromRGB(0,0,0)
-			BackgroundCloseUI_1.BorderSizePixel = 0
-			BackgroundCloseUI_1.Position = UDim2.new(0.5, 0,0.5, 0)
-			BackgroundCloseUI_1.Size = UDim2.new(1, 0,1, 0)
-			BackgroundCloseUI_1.ClipsDescendants = true
+            buttonCorner.CornerRadius = UDim.new(0.2, 0)
+            buttonCorner.Parent = minimizeButton
 
-			addToTheme('Background', BackgroundCloseUI_1)
+            local dragging = false
+            local dragInput, touchPos, buttonPos
 
-			UICornerCloseUI_1.Name = "UICornerCloseUI"
-			UICornerCloseUI_1.Parent = BackgroundCloseUI_1
-			UICornerCloseUI_1.CornerRadius = UDim.new(0,6)
+            minimizeButton.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    dragging = true
+                    touchPos = input.Position
+                    buttonPos = minimizeButton.Position
 
-			FrameCloseUI_1.Name = "FrameCloseUI"
-			FrameCloseUI_1.Parent = BackgroundCloseUI_1
-			FrameCloseUI_1.AnchorPoint = Vector2.new(0, 1)
-			FrameCloseUI_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-			FrameCloseUI_1.BackgroundTransparency = 0.8999999761581421
-			FrameCloseUI_1.BorderColor3 = Color3.fromRGB(0,0,0)
-			FrameCloseUI_1.BorderSizePixel = 0
-			FrameCloseUI_1.Position = UDim2.new(0, 0,1, 0)
-			FrameCloseUI_1.Size = UDim2.new(1, 0,0, 4)
+                    input.Changed:Connect(function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            dragging = false
+                        end
+                    end)
+                end
+            end)
 
-            ImageLabelIconMinimize.Name = "MiniMizeUi"
-            ImageLabelIconMinimize.Parent = BackgroundCloseUI_1
-            ImageLabelIconMinimize.AutomaticSize = Enum.AutomaticSize.Y
-            ImageLabelIconMinimize.AnchorPoint = Vector2.new(0.5, 0.5)
-            ImageLabelIconMinimize.BackgroundColor3 = Color3.fromRGB(255,255,255)
-            ImageLabelIconMinimize.BackgroundTransparency = 1
-            ImageLabelIconMinimize.BorderColor3 = Color3.fromRGB(0,0,0)
-            ImageLabelIconMinimize.BorderSizePixel = 0
-            ImageLabelIconMinimize.Size = UDim2.new(1, 0,1, 0)
-            ImageLabelIconMinimize.Image = CloseUI.Image
-            ImageLabelIconMinimize.ImageTransparency = 1
+            minimizeButton.InputChanged:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                    dragInput = input
+                end
+            end)
 
-			addToTheme('Image & Icon', ImageLabelIconMinimize)
+            game:GetService("UserInputService").InputChanged:Connect(function(input)
+                if input == dragInput and dragging then
+                    local delta = input.Position - touchPos
+                    minimizeButton.Position = UDim2.new(
+                        buttonPos.X.Scale,
+                        buttonPos.X.Offset + delta.X,
+                        buttonPos.Y.Scale,
+                        buttonPos.Y.Offset + delta.Y
+                    )
+                end
+            end)
 
-			CloseUIShadow.Size = UDim2.new(0, ImageLabelIconMinimize.X + 40,0, 40)
-
-			local Click = click(CloseUIShadow)
-			lak(Click, CloseUIShadow)
-			Click.MouseButton1Click:Connect(function()
-				tw({v = ImageLabelIconMinimize, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = ImageLabelIconMinimize.TextSize - 2}}):Play()
-				delay(.06, function()
-					tw({v = ImageLabelIconMinimize, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 12}}):Play()
-				end)
-				pcall(closeui)
-			end)
-		end
-	end
-
+            minimizeButton.MouseButton1Click:Connect(function()
+                pcall(closeui)
+            end)
+        end
+    end
 	return Tabs
 end
 
