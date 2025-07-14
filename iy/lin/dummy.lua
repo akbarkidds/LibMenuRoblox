@@ -4698,7 +4698,7 @@ function Library:Window(p)
 
 			addToTheme('Image & Icon', ImageLabelIconMinimize)
 
-			CloseUIShadow.Size = UDim2.new(0, ImageLabelIconMinimize.TextBounds.X + 40,0, 40)
+			CloseUIShadow.Size = UDim2.new(0, ImageLabelIconMinimize.X + 40,0, 40)
 
 			local Click = click(CloseUIShadow)
 			lak(Click, CloseUIShadow)
