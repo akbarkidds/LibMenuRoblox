@@ -4634,7 +4634,7 @@ function Library:Window(p)
 			local BackgroundCloseUI_1 = Instance.new("Frame")
 			local UICornerCloseUI_1 = Instance.new("UICorner")
 			local FrameCloseUI_1 = Instance.new("Frame")
-			local Title_1 = Instance.new("ImageLabel")
+			local ImageLabelIconMinimize = Instance.new("ImageLabel")
 
 			CloseUIShadow.Name = "CloseUIShadow"
 			CloseUIShadow.Parent = ScreenGui
@@ -4684,28 +4684,28 @@ function Library:Window(p)
 			FrameCloseUI_1.Position = UDim2.new(0, 0,1, 0)
 			FrameCloseUI_1.Size = UDim2.new(1, 0,0, 4)
 
-            Title_1.Name = "MiniMizeUi"
-            Title_1.Parent = BackgroundCloseUI_1
-            Title_1.AutomaticSize = Enum.AutomaticSize.Y
-            Title_1.AnchorPoint = Vector2.new(0.5, 0.5)
-            Title_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-            Title_1.BackgroundTransparency = 1
-            Title_1.BorderColor3 = Color3.fromRGB(0,0,0)
-            Title_1.BorderSizePixel = 0
-            Title_1.Size = UDim2.new(1, 0,1, 0)
-            Title_1.Image = CloseUI.Image
-            Title_1.ImageTransparency = 1
+            ImageLabelIconMinimize.Name = "MiniMizeUi"
+            ImageLabelIconMinimize.Parent = BackgroundCloseUI_1
+            ImageLabelIconMinimize.AutomaticSize = Enum.AutomaticSize.Y
+            ImageLabelIconMinimize.AnchorPoint = Vector2.new(0.5, 0.5)
+            ImageLabelIconMinimize.BackgroundColor3 = Color3.fromRGB(255,255,255)
+            ImageLabelIconMinimize.BackgroundTransparency = 1
+            ImageLabelIconMinimize.BorderColor3 = Color3.fromRGB(0,0,0)
+            ImageLabelIconMinimize.BorderSizePixel = 0
+            ImageLabelIconMinimize.Size = UDim2.new(1, 0,1, 0)
+            ImageLabelIconMinimize.Image = CloseUI.Image
+            ImageLabelIconMinimize.ImageTransparency = 1
 
-			addToTheme('Image & Icon', Title_1)
+			addToTheme('Image & Icon', ImageLabelIconMinimize)
 
-			CloseUIShadow.Size = UDim2.new(0, Title_1.TextBounds.X + 40,0, 40)
+			CloseUIShadow.Size = UDim2.new(0, ImageLabelIconMinimize.TextBounds.X + 40,0, 40)
 
 			local Click = click(CloseUIShadow)
 			lak(Click, CloseUIShadow)
 			Click.MouseButton1Click:Connect(function()
-				tw({v = Title_1, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = Title_1.TextSize - 2}}):Play()
+				tw({v = ImageLabelIconMinimize, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = ImageLabelIconMinimize.TextSize - 2}}):Play()
 				delay(.06, function()
-					tw({v = Title_1, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 12}}):Play()
+					tw({v = ImageLabelIconMinimize, t = 0.15, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 12}}):Play()
 				end)
 				pcall(closeui)
 			end)
