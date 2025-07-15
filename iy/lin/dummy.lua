@@ -471,6 +471,7 @@ do
 			Icon_1.ImageRectSize = gl(i).ImageRectSize
 			Icon_1.ImageRectOffset = gl(i).ImageRectPosition
 			Icon_1.ImageTransparency = 0.7
+            Icon_1.Visible = false
 
 			Frame_1.Parent = Image
 			Frame_1.AnchorPoint = Vector2.new(1, 0.5)
@@ -4377,7 +4378,6 @@ function Library:Window(p)
 
 	do
 		local Size_1 = Instance.new("TextButton")
-
 		Size_1.Name = "Size"
 		Size_1.Parent = Background_1
 		Size_1.Active = true
@@ -4629,23 +4629,20 @@ function Library:Window(p)
 
 		do
             -- ===================== icon ===================== --
-            local screenGui = Instance.new("ScreenGui")
+
             local minimizeButton = Instance.new("ImageButton")
             local buttonCorner = Instance.new("UICorner")
-
-            screenGui.Name = "MobileMinimize"
-            screenGui.Parent = game:GetService("CoreGui")
-            screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-            minimizeButton.Parent = screenGui
+            
+            minimizeButton.Parent = ScreenGui
             minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
             minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
             minimizeButton.BorderSizePixel = 0
             minimizeButton.Position = UDim2.new(0, workspace.CurrentCamera.ViewportSize.X * (94/100) ,0,14)
+            minimizeButton.Visible = CloseUI.Enabled
 
             local originalSize = UDim2.new(0, 45, 0, 45)
             minimizeButton.Size = originalSize + UDim2.new(0, originalSize.X.Offset * 0.15, 0, originalSize.Y.Offset * 0.15)
-            minimizeButton.Image = "rbxassetid://97909023934615"
+            minimizeButton.Image = CloseUI.Image or "rbxassetid://126134303623984"
 
             buttonCorner.CornerRadius = UDim.new(0.2, 0)
             buttonCorner.Parent = minimizeButton
