@@ -4285,20 +4285,6 @@ function Library:Window(p)
 		Button1_1.BorderSizePixel = 0
 		Button1_1.Size = UDim2.new(0, 130,0, 40)
 
-		UICorner_2.Parent = Button1_1
-		UICorner_2.CornerRadius = UDim.new(1,0)
-
-		UIGradient_1.Parent = Button1_1
-		UIGradient_1.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
-
-		UIStroke_1.Parent = Button1_1
-		UIStroke_1.Color = Color3.fromRGB(255,255,255)
-		UIStroke_1.Thickness = 2
-
-		UIGradient_2.Parent = UIStroke_1
-		UIGradient_2.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
-		UIGradient_2.Rotation = 180
-
 		TextLabel_2.Parent = Button1_1
 		TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_2.BackgroundTransparency = 1
@@ -4327,20 +4313,6 @@ function Library:Window(p)
 		Button2_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Button2_1.BorderSizePixel = 0
 		Button2_1.Size = UDim2.new(0, 130,0, 40)
-
-		UICorner_3.Parent = Button2_1
-		UICorner_3.CornerRadius = UDim.new(1,0)
-
-		UIGradient_3.Parent = Button2_1
-		UIGradient_3.Color = Color3.fromRGB(255,255,255)
-
-		UIStroke_3.Parent = Button2_1
-		UIStroke_3.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
-		UIStroke_3.Thickness = 2
-
-		UIGradient_4.Parent = UIStroke_3
-		UIGradient_4.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
-		UIGradient_4.Rotation = 180
 
 		TextLabel_3.Parent = Button2_1
 		TextLabel_3.BackgroundColor3 = Color3.fromRGB(255,255,255)
