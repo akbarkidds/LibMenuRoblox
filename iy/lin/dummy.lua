@@ -4289,10 +4289,6 @@ function Library:Window(p)
 		TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_2.TextSize = 16
 
-		UIStroke_2.Parent = TextLabel_2
-		UIStroke_2.Thickness = 1
-		UIStroke_2.Transparency = 0.95
-
 		UIListLayout_2.Parent = Frame_2
 		UIListLayout_2.Padding = UDim.new(0,10)
 		UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
