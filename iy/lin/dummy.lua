@@ -1,6 +1,5 @@
 Library = {}
 SaveTheme = {}
-
 local themes = {
 	index = {'Dark', 'Amethyst'},
 	Amethyst = {
