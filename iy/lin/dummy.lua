@@ -4218,17 +4218,10 @@ function Library:Window(p)
 		local Frame_2 = Instance.new("Frame")
 		local Button1_1 = Instance.new("Frame")
 		local UICorner_2 = Instance.new("UICorner")
-		local UIGradient_1 = Instance.new("UIGradient")
-		local UIStroke_1 = Instance.new("UIStroke")
-		local UIGradient_2 = Instance.new("UIGradient")
 		local TextLabel_2 = Instance.new("TextLabel")
-		local UIStroke_2 = Instance.new("UIStroke")
 		local UIListLayout_2 = Instance.new("UIListLayout")
 		local Button2_1 = Instance.new("Frame")
 		local UICorner_3 = Instance.new("UICorner")
-		local UIGradient_3 = Instance.new("UIGradient")
-		local UIStroke_3 = Instance.new("UIStroke")
-		local UIGradient_4 = Instance.new("UIGradient")
 		local TextLabel_3 = Instance.new("TextLabel")
 		local UIStroke_4 = Instance.new("UIStroke")
 
@@ -4596,15 +4589,13 @@ function Library:Window(p)
 				Title = "Do you want to <font color='#FF0000'>close</font> the ui?",
 				Button1 = {
 					Title = 'Confirm',
-					Color = Color3.fromRGB(120, 50, 75),
 					Callback = function()
 						ScreenGui:Destroy()
 					end,
 				},
 				Button2 = {
-					Title = 'Cancel',
-					Color = Color3.fromRGB(120, 50, 75),
-				}
+					Title = 'Cancel',				
+                }
 			})
 		end)
 
