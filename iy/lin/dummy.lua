@@ -4248,7 +4248,7 @@ function Library:Window(p)
 		Frame_1.Size = UDim2.new(0, 100,0, 100)
 
 		TextLabel_1.Parent = Frame_1
-		TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		TextLabel_1.BackgroundColor3 = Color3.fromRGB(0,0,0)
 		TextLabel_1.BackgroundTransparency = 1
 		TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		TextLabel_1.BorderSizePixel = 0
@@ -4274,8 +4274,9 @@ function Library:Window(p)
 
 		Button1_1.Name = "Button1"
 		Button1_1.Parent = Frame_2
-		Button1_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		Button1_1.BackgroundColor3 = Color3.fromRGB(0,0,0)
 		Button1_1.BorderColor3 = Color3.fromRGB(0,0,0)
+        Button1_1.BackgroundTransparency = 0.5
 		Button1_1.BorderSizePixel = 0
 		Button1_1.Size = UDim2.new(0, 130,0, 40)
 
@@ -4283,7 +4284,7 @@ function Library:Window(p)
 		UICorner_2.CornerRadius = UDim.new(1,0)
 
 		UIStroke_1.Parent = Button1_1
-		UIStroke_1.Color = Color3.fromRGB(255,255,255)
+		UIStroke_1.Color = Color3.fromRGB(0,0,0)
 		UIStroke_1.Thickness = 2
 
 		TextLabel_2.Parent = Button1_1
@@ -4310,7 +4311,8 @@ function Library:Window(p)
 
 		Button2_1.Name = "Button2"
 		Button2_1.Parent = Frame_2
-		Button2_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		Button2_1.BackgroundColor3 = Color3.fromRGB(0,0,0)
+        Button1_1.BackgroundTransparency = 0.5
 		Button2_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Button2_1.BorderSizePixel = 0
 		Button2_1.Size = UDim2.new(0, 130,0, 40)
@@ -4319,7 +4321,7 @@ function Library:Window(p)
 		UICorner_3.CornerRadius = UDim.new(1,0)
 
 		UIStroke_3.Parent = Button2_1
-		UIStroke_3.Color = Color3.fromRGB(255,255,255)
+		UIStroke_3.Color = Color3.fromRGB(0,0,0)
 		UIStroke_3.Thickness = 2
 
 		TextLabel_3.Parent = Button2_1
