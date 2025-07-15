@@ -4216,10 +4216,13 @@ function Library:Window(p)
 		local Frame_2 = Instance.new("Frame")
 		local Button1_1 = Instance.new("Frame")
 		local UICorner_2 = Instance.new("UICorner")
+		local UIStroke_1 = Instance.new("UIStroke")
 		local TextLabel_2 = Instance.new("TextLabel")
+		local UIStroke_2 = Instance.new("UIStroke")
 		local UIListLayout_2 = Instance.new("UIListLayout")
 		local Button2_1 = Instance.new("Frame")
 		local UICorner_3 = Instance.new("UICorner")
+		local UIStroke_3 = Instance.new("UIStroke")
 		local TextLabel_3 = Instance.new("TextLabel")
 		local UIStroke_4 = Instance.new("UIStroke")
 
@@ -4276,6 +4279,13 @@ function Library:Window(p)
 		Button1_1.BorderSizePixel = 0
 		Button1_1.Size = UDim2.new(0, 130,0, 40)
 
+		UICorner_2.Parent = Button1_1
+		UICorner_2.CornerRadius = UDim.new(1,0)
+
+		UIStroke_1.Parent = Button1_1
+		UIStroke_1.Color = Color3.fromRGB(255,255,255)
+		UIStroke_1.Thickness = 2
+
 		TextLabel_2.Parent = Button1_1
 		TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_2.BackgroundTransparency = 1
@@ -4286,6 +4296,10 @@ function Library:Window(p)
 		TextLabel_2.Text = TitleButton1
 		TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_2.TextSize = 16
+
+		UIStroke_2.Parent = TextLabel_2
+		UIStroke_2.Thickness = 1
+		UIStroke_2.Transparency = 0.95
 
 		UIListLayout_2.Parent = Frame_2
 		UIListLayout_2.Padding = UDim.new(0,10)
@@ -4300,6 +4314,13 @@ function Library:Window(p)
 		Button2_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Button2_1.BorderSizePixel = 0
 		Button2_1.Size = UDim2.new(0, 130,0, 40)
+
+		UICorner_3.Parent = Button2_1
+		UICorner_3.CornerRadius = UDim.new(1,0)
+
+		UIStroke_3.Parent = Button2_1
+		UIStroke_3.Color = Color3.fromRGB(255,255,255)
+		UIStroke_3.Thickness = 2
 
 		TextLabel_3.Parent = Button2_1
 		TextLabel_3.BackgroundColor3 = Color3.fromRGB(255,255,255)
@@ -4583,13 +4604,15 @@ function Library:Window(p)
 				Title = "Do you want to <font color='#FF0000'>close</font> the ui?",
 				Button1 = {
 					Title = 'Confirm',
+					Color = Color3.fromRGB(120, 50, 75),
 					Callback = function()
 						ScreenGui:Destroy()
 					end,
 				},
 				Button2 = {
-					Title = 'Cancel',				
-                }
+					Title = 'Cancel',
+					Color = Color3.fromRGB(120, 50, 75),
+				}
 			})
 		end)
 
