@@ -156,6 +156,7 @@ local themes = {
 		}
 	},
 }
+local IsTheme = 'Dark'
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "AkbarHub"
@@ -1050,13 +1051,10 @@ function Library:Window(p)
 	local Title = p.Title or 'null'
 	local Desc = p.Desc or ''
 	local Icon = p.Icon or 'door-open'
-	local Theme = p.Theme or 'Dark'
 	local Keybind = p.Config.Keybind or Enum.KeyCode.LeftControl
 	local Size = p.Config.Size or UDim2.new(0, 530,0, 400)
 
 	local R, HAA = false, false
-	local IsTheme = p.Theme
-
 	local Shadow_1 = Instance.new("ImageLabel")
 	local UIPadding_1 = Instance.new("UIPadding")
 	local Background_1 = Instance.new("CanvasGroup")
