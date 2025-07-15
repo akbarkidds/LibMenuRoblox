@@ -4629,10 +4629,10 @@ function Library:Window(p)
 
 		do
             -- ===================== icon ===================== --
-
+            local CloseUI = p.CloseUIButton
             local minimizeButton = Instance.new("ImageButton")
             local buttonCorner = Instance.new("UICorner")
-            
+
             minimizeButton.Parent = ScreenGui
             minimizeButton.BackgroundColor3 = Color3.new(1.000000, 1.000000, 1.000000)
             minimizeButton.BorderColor3 = Color3.new(1.000000, 1.000000, 1.000000)
