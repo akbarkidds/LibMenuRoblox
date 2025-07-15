@@ -4207,8 +4207,8 @@ function Library:Window(p)
 		local Title = p.Title or 'null'
 		local TitleButton1 = p.Button1.Title or 'null'
 		local TitleButton2 = p.Button2.Title or 'null'
-		local Color1 = p.Button1.Color or Color3.fromRGB(0, 188, 0)
-		local Color2 = p.Button2.Color or Color3.fromRGB(226, 39, 6)
+		local Color1 = Color3.fromRGB(120, 50, 75)
+		local Color2 = Color3.fromRGB(120, 50, 75)
 
 		local Dialog = Instance.new("CanvasGroup")
 		local UICorner_1 = Instance.new("UICorner")
@@ -4289,14 +4289,14 @@ function Library:Window(p)
 		UICorner_2.CornerRadius = UDim.new(1,0)
 
 		UIGradient_1.Parent = Button1_1
-		UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 124, 124))}
+		UIGradient_1.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
 
 		UIStroke_1.Parent = Button1_1
 		UIStroke_1.Color = Color3.fromRGB(255,255,255)
 		UIStroke_1.Thickness = 2
 
 		UIGradient_2.Parent = UIStroke_1
-		UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 124, 124))}
+		UIGradient_2.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
 		UIGradient_2.Rotation = 180
 
 		TextLabel_2.Parent = Button1_1
@@ -4307,7 +4307,7 @@ function Library:Window(p)
 		TextLabel_2.Size = UDim2.new(1, 0,1, 0)
 		TextLabel_2.Font = Enum.Font.GothamBold
 		TextLabel_2.Text = TitleButton1
-		TextLabel_2.TextColor3 = Color1
+		TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_2.TextSize = 16
 
 		UIStroke_2.Parent = TextLabel_2
@@ -4332,14 +4332,14 @@ function Library:Window(p)
 		UICorner_3.CornerRadius = UDim.new(1,0)
 
 		UIGradient_3.Parent = Button2_1
-		UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 124, 124))}
+		UIGradient_3.Color = Color3.fromRGB(255,255,255)
 
 		UIStroke_3.Parent = Button2_1
-		UIStroke_3.Color = Color3.fromRGB(255,255,255)
+		UIStroke_3.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
 		UIStroke_3.Thickness = 2
 
 		UIGradient_4.Parent = UIStroke_3
-		UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 124, 124))}
+		UIGradient_4.BackgroundColor3 = Color3.fromRGB(120, 50, 75)
 		UIGradient_4.Rotation = 180
 
 		TextLabel_3.Parent = Button2_1
@@ -4350,7 +4350,7 @@ function Library:Window(p)
 		TextLabel_3.Size = UDim2.new(1, 0,1, 0)
 		TextLabel_3.Font = Enum.Font.GothamBold
 		TextLabel_3.Text = TitleButton2
-		TextLabel_3.TextColor3 = Color2
+		TextLabel_3.TextColor3 = Color3.fromRGB(255,255,255)
 		TextLabel_3.TextSize = 16
 
 		UIStroke_4.Parent = TextLabel_3
@@ -4624,14 +4624,14 @@ function Library:Window(p)
 				Title = "Do you want to <font color='#FF0000'>close</font> the ui?",
 				Button1 = {
 					Title = 'Confirm',
-					Color = Color3.fromRGB(0, 188, 0),
+					Color = Color3.fromRGB(120, 50, 75),
 					Callback = function()
 						ScreenGui:Destroy()
 					end,
 				},
 				Button2 = {
 					Title = 'Cancel',
-					Color = Color3.fromRGB(226, 39, 6),
+					Color = Color3.fromRGB(120, 50, 75),
 				}
 			})
 		end)
