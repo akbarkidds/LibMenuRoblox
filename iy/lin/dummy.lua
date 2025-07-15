@@ -4207,8 +4207,6 @@ function Library:Window(p)
 		local Title = p.Title or 'null'
 		local TitleButton1 = p.Button1.Title or 'null'
 		local TitleButton2 = p.Button2.Title or 'null'
-		local Color1 = Color3.fromRGB(120, 50, 75)
-		local Color2 = Color3.fromRGB(120, 50, 75)
 
 		local Dialog = Instance.new("CanvasGroup")
 		local UICorner_1 = Instance.new("UICorner")
