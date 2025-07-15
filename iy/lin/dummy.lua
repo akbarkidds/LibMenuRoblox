@@ -1055,7 +1055,6 @@ function Library:Window(p)
 	local Size = p.Config.Size or UDim2.new(0, 530,0, 400)
 
 	local R, HAA = false, false
-	local HasChangeTheme = p.Theme
 	local IsTheme = p.Theme
 
 	local Shadow_1 = Instance.new("ImageLabel")
@@ -1136,7 +1135,6 @@ function Library:Window(p)
 	local Frame_5 = Instance.new("Frame")
 	local Ct_1 = Instance.new("Frame")
 	local UIPadding_11 = Instance.new("UIPadding")
-	local Minisize_1 = Instance.new("ImageButton")
 	local UIListLayout_6 = Instance.new("UIListLayout")
 	local Close_1 = Instance.new("ImageButton")
 	local DropdownValue_1 = Instance.new("Frame")
@@ -1181,20 +1179,6 @@ function Library:Window(p)
 	UIPadding_11.PaddingLeft = UDim.new(0,10)
 	UIPadding_11.PaddingRight = UDim.new(0,10)
 	UIPadding_11.PaddingTop = UDim.new(0,5)
-
-	Minisize_1.Name = "Minisize"
-	Minisize_1.Parent = Ct_1
-	Minisize_1.Active = true
-	Minisize_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Minisize_1.BackgroundTransparency = 1
-	Minisize_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Minisize_1.BorderSizePixel = 0
-	Minisize_1.LayoutOrder = 2
-	Minisize_1.Size = UDim2.new(0, 16,0, 16)
-	Minisize_1.Image = "rbxassetid://13857987062"
-	Minisize_1.ImageTransparency = 0.5
-
-	addToTheme('Text & Icon', Minisize_1)
 
 	UIListLayout_6.Parent = Ct_1
 	UIListLayout_6.Padding = UDim.new(0,10)
@@ -4413,28 +4397,6 @@ function Library:Window(p)
 			R = true
 		end)
 
-		local isZ = false
-		local originalSize, originalPosition
-
-		Minisize_1.MouseButton1Click:Connect(function()
-			if not isZ then
-				originalSize = Shadow_1.Size
-				originalPosition = Shadow_1.Position
-				tw({v = Shadow_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {
-					Size = UDim2.new(1, 0, 1, 0),
-					Position = UDim2.new(0, 0, 0, 0)
-				}}):Play()
-				Minisize_1.Image = "rbxassetid://13857981896"
-			else
-				Minisize_1.Image = "rbxassetid://13857987062"
-				tw({v = Shadow_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {
-					Size = originalSize,
-					Position = originalPosition
-				}}):Play()
-			end
-			isZ = not isZ
-		end)
-
 		if not HAA then
 			local AP, PAZ = Shadow_1.AbsolutePosition, Shadow_1.Parent.AbsoluteSize
 			local NP = UDim2.new((AP.X / PAZ.X),
@@ -4519,99 +4481,19 @@ function Library:Window(p)
 			end
 		end)
 
-		local CallTheme = function(v)
-			IsTheme = v
-			local t = themes[v]
-			Library:setTheme({
-				['Shadow'] = t.Shadow,
-				['Background'] = t.Background,
-				['Page'] = t.Page,
-				['Main'] = t.Main,
-				['Text & Icon'] = t['Text & Icon'],
-				['Function'] = {
-					['Toggle'] = {
-						['Background'] = t.Function.Toggle.Background,
-						['True'] = {
-							['Toggle Background'] = t.Function.Toggle.True['Toggle Background'],
-							['Toggle Value'] = t.Function.Toggle.True['Toggle Value'],
-						},
-						['False'] = {
-							['Toggle Background'] = t.Function.Toggle.False['Toggle Background'],
-							['Toggle Value'] = t.Function.Toggle.False['Toggle Value'],
-						}
-					},
-					['Label'] = {
-						['Background'] = t.Function.Label.Background,
-					},
-					['Dropdown'] = {
-						['Background'] = t.Function.Dropdown.Background,
-						['Value Background'] = t.Function.Dropdown['Value Background'],
-						['Value Stroke'] = t.Function.Dropdown['Value Stroke'],
-						['Dropdown Select'] = {
-							['Background'] = t.Function.Dropdown['Dropdown Select'].Background,
-							['Search'] = t.Function.Dropdown['Dropdown Select'].Search,
-							['Item Background'] = t.Function.Dropdown['Dropdown Select']['Item Background'],
-						}
-					},
-					['Slider'] = {
-						['Background'] = t.Function.Slider.Background,
-						['Value Background'] = t.Function.Slider['Value Background'],
-						['Value Stroke'] = t.Function.Slider['Value Stroke'],
-						['Slider Bar'] = t.Function.Slider['Slider Bar'],
-						['Slider Bar Value'] = t.Function.Slider['Slider Bar Value'],
-						['Circle Value'] = t.Function.Slider['Circle Value'],
-					},
-					['Code'] = {
-						['Background'] = t.Function.Code.Background,
-						['Background Code'] = t.Function.Code['Background Code'],
-						['Background Code Value'] = t.Function.Code['Background Code Value'],
-						['ScrollingFrame Code'] = t.Function.Code['ScrollingFrame Code'],
-					},
-					['Button'] = {
-						['Background'] = t.Function.Button.Background,
-						['Click'] = t.Function.Button.Click,
-					},
-					['Textbox'] = {
-						['Background'] = t.Function.Textbox.Background,
-						['Value Background'] = t.Function.Textbox['Value Background'],
-						['Value Stroke'] = t.Function.Textbox['Value Stroke'],
-					},
-					['Keybind'] = {
-						['Background'] = t.Function.Keybind.Background,
-						['Value Background'] = t.Function.Keybind['Value Background'],
-						['Value Stroke'] = t.Function.Keybind['Value Stroke'],
-						['True'] = {
-							['Toggle Background'] = t.Function.Keybind.True['Toggle Background'],
-							['Toggle Value'] = t.Function.Keybind.True['Toggle Value'],
-						},
-						['False'] = {
-							['Toggle Background'] = t.Function.Keybind.False['Toggle Background'],
-							['Toggle Value'] = t.Function.Keybind.False['Toggle Value'],
-						}
-					},
-					['Color Picker'] = {
-						['Background'] = t.Function['Color Picker'].Background,
-						['Color Select'] = {
-							['Background'] = t.Function['Color Picker']['Color Select'].Background,
-							['UIStroke'] = t.Function['Color Picker']['Color Select'].UIStroke,
-						}
-					}
-				}
-			})
-		end
-		local ThemeDrop = addDropdownSelect(DropdownValue_1, DropdownValue_1, false, CallTheme, Theme, themes.index)
-
 		Close_1.MouseButton1Click:Connect(function()
 			Tabs:Dialog({
-				Title = "Do you want to <font color='#FF0000'>close</font>?",
+				Title = "Do you want to <font color='#FF0000'>close</font> the ui?",
 				Button1 = {
 					Title = 'Confirm',
+					Color = Color3.fromRGB(120, 50, 75),
 					Callback = function()
 						ScreenGui:Destroy()
 					end,
 				},
 				Button2 = {
 					Title = 'Cancel',
+					Color = Color3.fromRGB(120, 50, 75),
 				}
 			})
 		end)
