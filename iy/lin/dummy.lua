@@ -1531,7 +1531,7 @@ function Library:Window(p)
 		InPage_1.BackgroundColor3 = Color3.fromRGB(24,24,31)
 		InPage_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		InPage_1.BorderSizePixel = 0
-        InPage_1.ImageTransparency = 1
+        InPage_1.BackgroundTransparency = 1
 		InPage_1.Size = UDim2.new(1, 0,1, 0)
 		InPage_1.Position = UDim2.new(0.5, 0, 0.5, 0)
 		InPage_1.Visible = false
