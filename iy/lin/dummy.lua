@@ -1,5 +1,6 @@
 Library = {}
 SaveTheme = {}
+
 local themes = {
 	index = {'Dark', 'Amethyst'},
 	Amethyst = {
@@ -1263,7 +1264,8 @@ function Library:Window(p)
 	Icon_1.Image = gl(Icon).Image
 	Icon_1.ImageRectSize = gl(Icon).ImageRectSize
 	Icon_1.ImageRectOffset = gl(Icon).ImageRectPosition
-
+    Icon_1.Visible = false
+    
 	addToTheme('Text & Icon', Icon_1)
 
 	Title_1.Name = "Title"
