@@ -1831,6 +1831,8 @@ function Library:Window(p)
 
 			Click.MouseButton1Click:Connect(change)
 
+			delay(0.1, change)
+
 			local New = {}
 
 			function New:SetTitle(t)
