@@ -1794,7 +1794,8 @@ function Library:Window(p)
 			local Click = click(Toggle)
 
 			local function change(value)
-				if value then
+				Value = value
+				if Value then
 					Config:SetTextTransparencyTitle(0)
 					tw({v = Frame_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundColor3 = themes[IsTheme].Function.Toggle.True['Toggle Background']}}):Play()
 					tw({v = Frame_2, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out",
@@ -1813,7 +1814,7 @@ function Library:Window(p)
 							Position = UDim2.new(0, 0,0.5, 0)
 						}}):Play()
 				end
-				pcall(Callback, value)
+				pcall(Callback, Value)
 			end
 
 			Toggle:GetPropertyChangedSignal("BackgroundColor3"):Connect(function()
