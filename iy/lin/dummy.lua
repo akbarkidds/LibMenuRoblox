@@ -1948,6 +1948,17 @@ function Library:Window(p)
                 end
 				pcall(Callback)
 			end)
+			local New = {}
+
+			function New:SetTitle(t)
+				Config:SetTitle(t)
+			end
+
+			function New:SetDesc(t)
+				Config:SetDesc(t)
+			end
+
+			return New
 		end
 
 		function Func:Slider(p)
