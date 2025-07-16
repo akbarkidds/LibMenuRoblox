@@ -1845,7 +1845,7 @@ function Library:Window(p)
 
 			function New:SetValue(t)
 				Value = not t
-				change()
+				change(Value)
 			end
 
 			return New
