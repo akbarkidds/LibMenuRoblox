@@ -1793,8 +1793,6 @@ function Library:Window(p)
 
 			local Click = click(Toggle)
 
-			Value = not Value
-
 			local function change()
 				Value = not Value
 				if Value then
@@ -2899,6 +2897,8 @@ function Library:Window(p)
 			local Click = click(Keybind)
 			KeybindValue_1.ZIndex = 2
 			F.ZIndex = 2
+
+			Value = not Value
 
 			local function change()
 				Value = not Value
