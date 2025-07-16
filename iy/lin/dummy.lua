@@ -1793,8 +1793,10 @@ function Library:Window(p)
 
 			local Click = click(Toggle)
 
-			local function change(value)
-				Value = value
+			Value = not Value
+
+			local function change()
+				Value = not Value
 				if Value then
 					Config:SetTextTransparencyTitle(0)
 					tw({v = Frame_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "Out", g = {BackgroundColor3 = themes[IsTheme].Function.Toggle.True['Toggle Background']}}):Play()
@@ -1826,9 +1828,8 @@ function Library:Window(p)
 					Frame_2.BackgroundColor3 = themes[IsTheme].Function.Toggle.False['Toggle Value']
 				end
 			end)
-			Click.MouseButton1Click:Connect(function()
-				change(Value)
-			end)
+
+			Click.MouseButton1Click:Connect(change)
 
 			local New = {}
 
@@ -1846,7 +1847,7 @@ function Library:Window(p)
 
 			function New:SetValue(t)
 				Value = not t
-				change(Value)
+				change()
 			end
 
 			return New
@@ -2896,7 +2897,7 @@ function Library:Window(p)
 			local Click = click(Keybind)
 			KeybindValue_1.ZIndex = 2
 			F.ZIndex = 2
-
+			
 			Value = not Value
 
 			local function change()
