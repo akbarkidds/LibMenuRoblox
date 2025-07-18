@@ -1,4 +1,6 @@
 local httpService = game:GetService("HttpService")
+local SaveManager_ConfigName
+local SaveManager_ConfigList
 type Dropdown = {Value: any, List: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
 local DisplayerParser = {
 	Encode = function(Value)
@@ -250,14 +252,14 @@ local SaveManager = {} do
 				return self.Library:Notify({
 					Title = "Interface",
 					Desc = `Failed to load autoload config: {err}`,
-					Duration = 7
+					Time = 7
 				})
 			end
 
 			return self.Library:Notify({
 				Title = "Interface",
 				Desc = string.format("Auto loaded config %q", name),
-				Duration = 7
+				Time = 7
 			})
 		end
 
@@ -296,7 +298,7 @@ local SaveManager = {} do
 					return self.Library:Notify({
 						Title = "Interface",
 						Desc = "Invalid config name (empty)",
-						Duration = 7
+						Time = 7
 					})
 				end
 
@@ -305,14 +307,14 @@ local SaveManager = {} do
 					return self.Library:Notify({
 						Title = "Interface",
 						Desc = "Failed to save config: " .. err,
-						Duration = 7
+						Time = 7
 					})
 				end
 
 				self.Library:Notify({
 					Title = "Interface",
 					Desc = string.format("Created config %q", name),
-					Duration = 7
+					Time = 7
 				})
 
 				SaveManager.Options.SaveManager_ConfigList:Add(self:RefreshConfigList())
@@ -330,14 +332,14 @@ local SaveManager = {} do
 				return self.Library:Notify({
 					Title = "Interface",
 					Desc = "Failed to load config: " .. err,
-					Duration = 7
+					Time = 7
 				})
 			end
 
 			return self.Library:Notify({
 				Title = "Interface",
 				Desc = string.format("Loaded config %q", name),
-				Duration = 7
+				Time = 7
 			})
 		end})
 
@@ -349,14 +351,14 @@ local SaveManager = {} do
 				return self.Library:Notify({
 					Title = "Interface",
 					Desc = "Failed to overwrite config: " .. err,
-					Duration = 7
+					Time = 7
 				})
 			end
 
 			return self.Library:Notify({
 				Title = "Interface",
 				Desc = string.format("Overwrote config %q", name),
-				Duration = 7
+				Time = 7
 			})
 		end})
 
@@ -373,7 +375,7 @@ local SaveManager = {} do
 			self.Library:Notify({
 				Title = "Interface",
 				Desc = string.format("Set %q to auto load", name),
-				Duration = 7
+				Time = 7
 			})
 		end})
 
