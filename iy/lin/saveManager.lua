@@ -28,7 +28,7 @@ local function SetDisplayerDropdownValue(Dropdown: Dropdown, Value)
 		local Values = {}
 		
 		for _, DataValue in Value do 
-			for _, DropdownValue in Dropdown.Values do 
+			for _, DropdownValue in Dropdown.List do 
 				if typeof(DropdownValue) ~= 'table' or not TableEqual(DataValue, DropdownValue) then continue end 
 				
 				Values[DropdownValue] = true
@@ -36,9 +36,9 @@ local function SetDisplayerDropdownValue(Dropdown: Dropdown, Value)
 			end
 		end
 		
-		Dropdown:SetValue(Values)
+		Dropdown:Add(Values)
 	else
-		for _, DropdownValue in Dropdown.Values do 
+		for _, DropdownValue in Dropdown.List do 
 			if typeof(DropdownValue) ~= 'table' or not TableEqual(Value, DropdownValue) then continue end 
 			
 			Dropdown:SetValue(DropdownValue)
@@ -114,7 +114,7 @@ local SaveManager = {} do
 			end,
 		},
 
-		Input = {
+		Textbox = {
 			Save = function(idx, object)
 				return { type = "Input", idx = idx, text = object.Value, Timestamp = object.Instance.CreatedAt }
 			end,
