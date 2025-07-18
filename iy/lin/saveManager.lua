@@ -273,10 +273,10 @@ local SaveManager = {} do
 
 		local section = Tab:Section({Title = "Configuration"})
 
-		section:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
-		section:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
+		Tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
+		Tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
 
-		section:Button({
+		Tab:Button({
 			Title = "Create config",
 			Callback = function()
 				local name = SaveManager.Options.SaveManager_ConfigName.Value
@@ -311,7 +311,7 @@ local SaveManager = {} do
 			end
 		})
 
-		section:Button({Title = "Load config", Callback = function()
+		Tab:Button({Title = "Load config", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Load(name)
@@ -330,7 +330,7 @@ local SaveManager = {} do
 			})
 		end})
 
-		section:Button({Title = "Overwrite config", Callback = function()
+		Tab:Button({Title = "Overwrite config", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Save(name)
@@ -349,13 +349,13 @@ local SaveManager = {} do
 			})
 		end})
 
-		section:Button({Title = "Refresh list", Callback = function()
+		Tab:Button({Title = "Refresh list", Callback = function()
 			SaveManager.Options.SaveManager_ConfigList:Add(self:RefreshConfigList())
 			SaveManager.Options.SaveManager_ConfigList:SetValue(nil)
 		end})
 
 		local AutoloadButton
-		AutoloadButton = section:Button({Title = "Set as autoload", Desc = "Current autoload config: none", Callback = function()
+		AutoloadButton = Tab:Button({Title = "Set as autoload", Desc = "Current autoload config: none", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 			writefile(`{self.Folder}/settings/autoload.txt`, name)
 			AutoloadButton:SetDesc("Current autoload config: " .. name)
