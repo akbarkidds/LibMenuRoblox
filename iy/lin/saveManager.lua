@@ -270,11 +270,11 @@ local SaveManager = {} do
 
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
-		local section = Tab:Section({Title = "Configuration"})
-		Tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
-		Tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
+		tab:Section({Title = "Auto Equip Best Shadow / Sell Shadow."})
+		tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
+		tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
 
-		Tab:Button({
+		tab:Button({
 			Title = "Create config",
 			Callback = function()
 				local name = SaveManager.Options.SaveManager_ConfigName.Value
@@ -309,7 +309,7 @@ local SaveManager = {} do
 			end
 		})
 
-		Tab:Button({Title = "Load config", Callback = function()
+		tab:Button({Title = "Load config", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Load(name)
@@ -328,7 +328,7 @@ local SaveManager = {} do
 			})
 		end})
 
-		Tab:Button({Title = "Overwrite config", Callback = function()
+		tab:Button({Title = "Overwrite config", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Save(name)
@@ -347,7 +347,7 @@ local SaveManager = {} do
 			})
 		end})
 
-		Tab:Button({Title = "Refresh list", Callback = function()
+		tab:Button({Title = "Refresh list", Callback = function()
 			SaveManager.Options.SaveManager_ConfigList:Add(self:RefreshConfigList())
 			SaveManager.Options.SaveManager_ConfigList:SetValue(nil)
 		end})
