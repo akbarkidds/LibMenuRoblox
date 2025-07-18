@@ -1,7 +1,7 @@
 local httpService = game:GetService("HttpService")
 
 
-type Dropdown = {Value: any, Values: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
+type Dropdown = {Value: any, List: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
 
 local DisplayerParser = {
 	Encode = function(Value)
