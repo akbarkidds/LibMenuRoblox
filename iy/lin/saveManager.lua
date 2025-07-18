@@ -1,4 +1,6 @@
 local httpService = game:GetService("HttpService")
+local SaveManager_ConfigName
+local SaveManager_ConfigList
 type Dropdown = {Value: any, List: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
 local DisplayerParser = {
 	Encode = function(Value)
@@ -238,7 +240,7 @@ local SaveManager = {} do
 
 	function SaveManager:SetLibrary(library)
 		self.Library = library
-		self.Options = library.Func
+		self.Options = library.Options
 	end
 
 	function SaveManager:LoadAutoloadConfig()
@@ -266,9 +268,27 @@ local SaveManager = {} do
 
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
-		tab:Section({Title = "Auto Equip Best Shadow / Sell Shadow."})
-		tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
-		tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
+		tab:Section({Title = "Config Save."})
+        tab:Textbox({
+            Title = "Config name",
+            Desc = "",
+            Placeholder = "...",
+            Value = "",
+            ClearTextOnFocus = false,
+            Callback = function(text)
+                SaveManager.Options.SaveManager_ConfigName.Value = text
+            end
+        })
+
+        tab:Dropdown({
+            Title = "Config list",
+            List = self:RefreshConfigList(),
+            Value = "",
+            Callback = function(choice)
+                SaveManager.Options.SaveManager_ConfigList.Value = choice
+            end
+        })
+        
 		tab:Button({
 			Title = "Create config",
 			Callback = function()
