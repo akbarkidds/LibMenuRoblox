@@ -56,17 +56,15 @@ local InterfaceManager = {} do
     function InterfaceManager:BuildInterfaceSection(tab)
         assert(self.Library, "Must set InterfaceManager.Library")
 		local Library = self.Library
-        local Settings = InterfaceManager.Settings
-
-        InterfaceManager:LoadSettings()
-
+        	local Settings = InterfaceManager.Settings
+        	InterfaceManager:LoadSettings()
 		local section = tab:Section({Title = "Interface"})
-
 		local InterfaceTheme = section:Dropdown({
 			Title = "Theme",
 			Desc = "Changes the interface theme.",
-			List = Settings.Theme,
-			Value = Library.Themes,
+			List = Library.Themes,
+			Multi = false,
+			Value = Settings.Theme,
 			Callback = function(Value)
 				Library:SetTheme(Value)
 		                Settings.Theme = Value
