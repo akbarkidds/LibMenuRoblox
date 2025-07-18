@@ -60,7 +60,7 @@ local InterfaceManager = {} do
 
         InterfaceManager:LoadSettings()
 
-		local section = tab:Section("Interface")
+		local section = tab:Section({Title = "Interface"})
 
 		local InterfaceTheme = section:Dropdown({
 			Title = "Theme",
@@ -69,8 +69,8 @@ local InterfaceManager = {} do
 			Value = Settings.Theme,
 			Callback = function(Value)
 				Library:SetTheme(Value)
-                Settings.Theme = Value
-                InterfaceManager:SaveSettings()
+		                Settings.Theme = Value
+		                InterfaceManager:SaveSettings()
 			end
 		})
 
