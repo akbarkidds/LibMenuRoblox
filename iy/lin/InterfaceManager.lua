@@ -73,7 +73,7 @@ local InterfaceManager = {} do
 		})
 
       InterfaceTheme:SetValue(Settings.Theme)
-    
+
 		local MenuKeybind = tab:Keybind({ Title = "Minimize Bind", Key  = Settings.MenuKeybind })
 		MenuKeybind:OnChanged(function()
 			Settings.MenuKeybind = MenuKeybind.Value
