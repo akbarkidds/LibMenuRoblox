@@ -350,7 +350,7 @@ local SaveManager = {} do
 		end})
 
 		local AutoloadButton
-		AutoloadButton = Tab:Button({Title = "Set as autoload", Desc = "Current autoload config: none", Callback = function()
+		AutoloadButton = tab:Button({Title = "Set as autoload", Desc = "Current autoload config: none", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
 			writefile(`{self.Folder}/settings/autoload.txt`, name)
 			AutoloadButton:SetDesc("Current autoload config: " .. name)
