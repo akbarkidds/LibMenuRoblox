@@ -270,9 +270,7 @@ local SaveManager = {} do
 
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
-
 		local section = Tab:Section({Title = "Configuration"})
-
 		Tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
 		Tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
 
