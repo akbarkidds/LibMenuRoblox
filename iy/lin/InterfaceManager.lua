@@ -59,7 +59,7 @@ local InterfaceManager = {} do
         	local Settings = InterfaceManager.Settings
         	InterfaceManager:LoadSettings()
 		local section = tab:Section({Title = "Interface"})
-		local InterfaceTheme = section:Dropdown({
+		local InterfaceTheme = tab:Dropdown({
 			Title = "Theme",
 			Desc = "Changes the interface theme.",
 			List = Library.Themes,
@@ -74,7 +74,7 @@ local InterfaceManager = {} do
 
       InterfaceTheme:SetValue(Settings.Theme)
     
-		local MenuKeybind = section:Keybind({ Title = "Minimize Bind", Key  = Settings.MenuKeybind })
+		local MenuKeybind = tab:Keybind({ Title = "Minimize Bind", Key  = Settings.MenuKeybind })
 		MenuKeybind:OnChanged(function()
 			Settings.MenuKeybind = MenuKeybind.Value
             InterfaceManager:SaveSettings()
