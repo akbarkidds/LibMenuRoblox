@@ -148,7 +148,6 @@ local SaveManager = {} do
 		for idx, option in next, SaveManager.Options do
 			if not self.Parser[option.Type] then continue end
 			if self.Ignore[idx] then continue end
-
 			data.objects[#data.objects + 1] = self.Parser[option.Type].Save(idx, option)
 		end
 
@@ -268,8 +267,8 @@ local SaveManager = {} do
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
 		tab:Section({Title = "Auto Equip Best Shadow / Sell Shadow."})
-		tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
-		tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
+		SaveManager.Options.SaveManager_ConfigName = tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
+		SaveManager.Options.SaveManager_ConfigList = tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
 
 		tab:Button({
 			Title = "Create config",
