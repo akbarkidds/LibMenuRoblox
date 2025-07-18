@@ -1,6 +1,4 @@
 local httpService = game:GetService("HttpService")
-local SaveManager_ConfigName
-local SaveManager_ConfigList
 type Dropdown = {Value: any, List: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
 local DisplayerParser = {
 	Encode = function(Value)
@@ -288,16 +286,16 @@ local SaveManager = {} do
                 SaveManager.Options.SaveManager_ConfigList.Value = choice
             end
         })
-        
+
 		tab:Button({
 			Title = "Create config",
 			Callback = function()
 				local name = SaveManager.Options.SaveManager_ConfigName.Value
-
+                print(name)
 				if name:gsub(" ", "") == "" then 
 					return self.Library:Notify({
 						Title = "Interface",
-						SubContent = "Invalid config name (empty)",
+						Desc = "Invalid config name (empty)",
 						Duration = 7
 					})
 				end
