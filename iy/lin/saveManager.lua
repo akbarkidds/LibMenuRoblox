@@ -1,6 +1,4 @@
 local httpService = game:GetService("HttpService")
-local SaveManager_ConfigName
-local SaveManager_ConfigList
 type Dropdown = {Value: any, List: {i: any}, Multi: boolean, Displayer: (v) -> (n)?, SetValue: (any) -> ()}
 local DisplayerParser = {
 	Encode = function(Value)
@@ -115,7 +113,7 @@ local SaveManager = {} do
 
 		Textbox = {
 			Save = function(idx, object)
-				return { type = "Input", idx = idx, text = object.Value, Timestamp = object.Instance.CreatedAt }
+				return { type = "Textbox", idx = idx, text = object.Value, Timestamp = object.Instance.CreatedAt }
 			end,
 			Load = function(idx, data)
 				if SaveManager.Options[idx] and type(data.text) == "string" then
@@ -269,25 +267,25 @@ local SaveManager = {} do
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
 		tab:Section({Title = "Config Save."})
-        tab:Textbox({
-            Title = "Config name",
-            Desc = "",
-            Placeholder = "...",
-            Value = "",
-            ClearTextOnFocus = false,
-            Callback = function(text)
-                SaveManager.Options.SaveManager_ConfigName.Value = text
-            end
-        })
+	        tab:Textbox({
+	            Title = "Config name",
+	            Desc = "",
+	            Placeholder = "...",
+	            Value = "",
+	            ClearTextOnFocus = false,
+	            Callback = function(text)
+	                SaveManager.Options.SaveManager_ConfigName.Value = text
+	            end
+	        })
 
-        tab:Dropdown({
-            Title = "Config list",
-            List = self:RefreshConfigList(),
-            Value = "",
-            Callback = function(choice)
-                SaveManager.Options.SaveManager_ConfigList.Value = choice
-            end
-        })
+	        tab:Dropdown({
+	            Title = "Config list",
+	            List = self:RefreshConfigList(),
+	            Value = "",
+	            Callback = function(choice)
+	                SaveManager.Options.SaveManager_ConfigList.Value = choice
+	            end
+	        })
 
 		tab:Button({
 			Title = "Create config",
