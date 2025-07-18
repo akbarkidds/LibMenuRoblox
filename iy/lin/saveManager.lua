@@ -238,7 +238,7 @@ local SaveManager = {} do
 
 	function SaveManager:SetLibrary(library)
 		self.Library = library
-		self.Options = library.Options
+		self.Options = library.Func
 	end
 
 	function SaveManager:LoadAutoloadConfig()
@@ -267,9 +267,8 @@ local SaveManager = {} do
 	function SaveManager:BuildConfigSection(tab)
 		assert(self.Library, "Must set SaveManager.Library")
 		tab:Section({Title = "Auto Equip Best Shadow / Sell Shadow."})
-		SaveManager.Options.SaveManager_ConfigName = tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
-		SaveManager.Options.SaveManager_ConfigList = tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
-
+		tab:Textbox({ Title = "Config name", Placeholder = "Insert Config name Here" })
+		tab:Dropdown({ Title = "Config list", List = self:RefreshConfigList() })
 		tab:Button({
 			Title = "Create config",
 			Callback = function()
