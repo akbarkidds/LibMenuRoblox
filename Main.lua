@@ -2641,20 +2641,18 @@ function DiscordLib:Window(text)
 				DropItemHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
 				DropItemHolderLayout.Padding = UDim.new(0, 0)
 				DropdownFrameBtn.Focused:Connect(function()
-					if DropTog == false then
-						DropdownFrameMain.Visible = true
-						DropdownFrameMainOutline.Visible = true
-						Dropdown.Size = UDim2.new(0, 403, 0, 73 + DropdownFrameMainOutline.AbsoluteSize.Y)
-						ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
-					else
+                    DropdownFrameMain.Visible = true
+                    DropdownFrameMainOutline.Visible = true
+                    Dropdown.Size = UDim2.new(0, 403, 0, 73 + DropdownFrameMainOutline.AbsoluteSize.Y)
+                    ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
+				end)
+
+				DropdownFrameBtn.FocusLost:Connect(function()
 						Dropdown.Size = UDim2.new(0, 403, 0, 73)
 						DropdownFrameMain.Visible = false
 						DropdownFrameMainOutline.Visible = false
 						ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
-					end
-					DropTog = not DropTog
 				end)
-				
 				
 				for i,v in next, list do
 					itemcount = itemcount + 1
@@ -2728,16 +2726,16 @@ function DiscordLib:Window(text)
 					local SearchT = string.lower(DropdownFrameBtn.Text)
 					for i, v in pairs(DropItemHolder:GetChildren()) do
 						if v:IsA("TextButton") then
-								print(SearchT)
 							if SearchT ~= "" and v:FindFirstChild("ItemText") then
-									print(2)
 								if string.find(string.lower(v.ItemText.Text), SearchT) then
-										print(3)
 									v.Visible = true
 								else
-										print(4)
 									v.Visible = false
 								end
+                                DropdownFrameMain.Visible = true
+                                DropdownFrameMainOutline.Visible = true
+                                Dropdown.Size = UDim2.new(0, 403, 0, 73 + DropdownFrameMainOutline.AbsoluteSize.Y)
+                                ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
 							else
 								v.Visible = true
 							end
