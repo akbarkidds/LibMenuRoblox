@@ -2729,9 +2729,9 @@ function DiscordLib:Window(text)
 					for i, v in pairs(DropItemHolder:GetChildren()) do
 						if v:IsA("TextButton") then
 								print(SearchT)
-							if SearchT ~= "" and v:FindFirstChild("TextLabel") then
+							if SearchT ~= "" and v:FindFirstChild("ItemText") then
 									print(2)
-								if string.find(string.lower(v.TextLabel.Text), SearchT) then
+								if string.find(string.lower(v.ItemText.Text), SearchT) then
 										print(3)
 									v.Visible = true
 								else
