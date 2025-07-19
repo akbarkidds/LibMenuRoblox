@@ -2643,7 +2643,7 @@ function DiscordLib:Window(text)
 
 				DropdownFrameBtn.Changed:Connect(function()
 					local SearchT = string.lower(DropdownFrameBtn.Text)
-					for i, v in pairs(DropdownFrameMain:GetChildren()) do
+					for i, v in pairs(DropItemHolder:GetChildren()) do
 						if v:IsA("Frame") then
 							if SearchT ~= "" and v:FindFirstChild("TextLabel") then
 								if string.find(string.lower(v.TextLabel.Text), SearchT) then
