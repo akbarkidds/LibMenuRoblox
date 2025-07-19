@@ -2728,7 +2728,7 @@ function DiscordLib:Window(text)
 					local SearchT = string.lower(DropdownFrameBtn.Text)
 					for i, v in pairs(DropItemHolder:GetChildren()) do
 						if v:IsA("TextButton") then
-								print(1)
+								print(SearchT)
 							if SearchT ~= "" and v:FindFirstChild("TextLabel") then
 									print(2)
 								if string.find(string.lower(v.TextLabel.Text), SearchT) then
