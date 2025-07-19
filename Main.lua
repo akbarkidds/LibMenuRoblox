@@ -639,7 +639,7 @@ function Library:CreateWindow(Settings: { Title: string, Size: UDim2, Transparen
 		})
 	end
 
-	function Options:AddDropdown(Settings: { Title: string, Description: string, Options: {}, Tab: Instance, Callback: any }) 
+	function Options:AddDropdown(Settings: { Title: string, Description: string, Options: {}, Tab: Instance, Callback: any })
 		local Dropdown = Clone(Components["Dropdown"]);
 		local Title, Description = Options:GetLabels(Dropdown);
 		local Text = Dropdown["Main"].Options;
@@ -647,10 +647,26 @@ function Library:CreateWindow(Settings: { Title: string, Size: UDim2, Transparen
 		Connect(Dropdown.MouseButton1Click, function()
 			local Example = Clone(Examples["DropdownExample"]);
 			local Buttons = Example["Top"]["Buttons"];
+            local Input = Clone(Components["Input"]);
+            local TextBox = Input["Main"]["Input"];
 
+            Connect(Input.MouseButton1Click, function()
+                TextBox:CaptureFocus()
+            end)
+    
+            Connect(TextBox.FocusLost, function()
+                Settings.Callback(TextBox.Text)
+            end)
+    
 			Tween(BG, .25, { BackgroundTransparency = 0.6 });
 			SetProperty(Example, { Parent = Window });
 			Animations:Open(Example, 0, true)
+            Animations:Component(Input)
+            SetProperty(Input, {
+                Name = Settings.Title,
+                Parent = Settings.Tab,
+                Visible = true,
+            })
 
 			for Index, Button in next, Buttons:GetChildren() do
 				if Button:IsA("TextButton") then
@@ -675,8 +691,8 @@ function Library:CreateWindow(Settings: { Title: string, Size: UDim2, Transparen
 				SetProperty(Button, { Parent = Example.ScrollingFrame, Visible = true });
 				Destroy(Description);
 
-				Connect(Button.MouseButton1Click, function() 
-					local NewValue = not Selected.Value 
+				Connect(Button.MouseButton1Click, function()
+					local NewValue = not Selected.Value
 
 					if NewValue then
 						Tween(Button, .25, { BackgroundColor3 = Theme.Interactables });
