@@ -2640,14 +2640,30 @@ function DiscordLib:Window(text)
 				DropItemHolderLayout.Parent = DropItemHolder
 				DropItemHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
 				DropItemHolderLayout.Padding = UDim.new(0, 0)
-				
-				DropdownFrameBtn.MouseButton1Click:Connect(function()
+
+				DropdownFrameBtn.Changed:Connect(function()
+					local SearchT = string.lower(DropdownFrameBtn.Text)
+					for i, v in pairs(DropdownFrameMain:GetChildren()) do
+						if v:IsA("Frame") then
+							if SearchT ~= "" and v:FindFirstChild("TextLabel") then
+								if string.find(string.lower(v.TextLabel.Text), SearchT) then
+									v.Visible = true
+								else
+									v.Visible = false
+								end
+							else
+								v.Visible = true
+							end
+						end
+					end
+					updateDropdownSize()
+				end)
+				DropdownFrameBtn.Focused:Connect(function()
 					if DropTog == false then
 						DropdownFrameMain.Visible = true
 						DropdownFrameMainOutline.Visible = true
 						Dropdown.Size = UDim2.new(0, 403, 0, 73 + DropdownFrameMainOutline.AbsoluteSize.Y)
 						ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
-						
 					else
 						Dropdown.Size = UDim2.new(0, 403, 0, 73)
 						DropdownFrameMain.Visible = false
