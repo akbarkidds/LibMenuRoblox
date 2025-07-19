@@ -8,8 +8,8 @@ local HttpService = game:GetService("HttpService")
 local pfp
 local user
 local tag
-local userinfo = {}
 
+local userinfo = {}
 pcall(function()
 	userinfo = HttpService:JSONDecode(readfile("discordlibinfo.txt"));
 end)
